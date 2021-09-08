@@ -19,7 +19,7 @@ variables:
 
 before_script:
   - export GRADLE_USER_HOME=`pwd`/backend/.gradle
-  - sudo chmod +x backend/gradlew
+  - chmod +x backend/gradlew
 
 build:
   stage: build
