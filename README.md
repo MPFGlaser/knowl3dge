@@ -35,18 +35,18 @@ Details to follow soon.
 
 ## REST API Documentation
 
-| URL | Resource | Operation | Description
----------------------------------------------
-| /users | Users | GET | Gets a list of all users
-| /users/{id} | Users | GET | Gets user with id {id}
-| /users/{id} | Users | DELETE | Deletes user with id {id}
-| /users/{id} | Users | PUT | Updates user with id {id}
-| /users | Users | POST | Creates a new user
-| /articles | Articles | GET | Gets a list of all Articles
-| /articles/{id} | Articles | GET | Gets article with id {id}
-| /articles/?printerType=printerType | Articles | GET | Gets articles with a specific printerType
-| /articles/?filamentType=filamentType | Articles | GET | Get articles with a specific filamentType
-| /articles/?issueType=issueType | Articles | GET | Gets articles with a specific issueType
-| /articles/{id} | Articles | DELETE | Deletes article with id {id}
-| /articles/{id} | Articles | PUT | Updates article with id {id}
-| /articles | Articles | POST | Creates a new article
+| URL | Resource | Operation | Description |
+|-----|----------|-----------|-------------|
+| /users | Users | GET | Gets a list of all users |
+| /users/{id} | Users | GET | Gets user with id {id} |
+| /users/{id} | Users | DELETE | Deletes user with id {id} |
+| /users/{id} | Users | PUT | Updates user with id {id} |
+| /users | Users | POST | Creates a new user |
+| /articles | Articles | GET | Gets a list of all Articles |
+| /articles/{id} | Articles | GET | Gets article with id {id} |
+| /articles/?printerType=printerType | Articles | GET | Gets articles with a specific printerType |
+| /articles/?filamentType=filamentType | Articles | GET | Get articles with a specific filamentType |
+| /articles/?issueType=issueType | Articles | GET | Gets articles with a specific issueType |
+| /articles/{id} | Articles | DELETE | Deletes article with id {id} |
+| /articles/{id} | Articles | PUT | Updates article with id {id} |
+| /articles | Articles | POST | Creates a new article |
