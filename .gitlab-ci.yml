@@ -19,8 +19,8 @@ variables:
 
 before_script:
   - export GRADLE_USER_HOME=`pwd`/backend/.gradle
+  - ls
   - chmod +x ./backend/gradlew
-  = ls
 
 build:
   stage: build
