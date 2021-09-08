@@ -19,24 +19,24 @@ variables:
 
 before_script:
   - export GRADLE_USER_HOME=`pwd`/backend/.gradle
-  - chmod +x backend/gradlew
+  - chmod +x ./backend/gradlew
 
 build:
   stage: build
-  script: backend/gradle --build-cache assemble
+  script: ./backend/gradle --build-cache assemble
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
     paths:
-      - backend/build
-      - backend/.gradle
+      - ./backend/build
+      - ./backend/.gradle
 
 test:
   stage: test
-  script: backend/gradle check
+  script: ./backend/gradle check
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
     paths:
-      - backend/build
-      - backend/.gradle
+      - ./backend/build
+      - ./backend/.gradle
