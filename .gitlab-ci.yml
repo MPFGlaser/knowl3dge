@@ -18,26 +18,25 @@ variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
 before_script:
-  - export GRADLE_USER_HOME=`pwd`/backend/.gradle
-  - ls
-  - chmod +x ./backend/gradlew
+  - cd ./backend
+  - export GRADLE_USER_HOME=`pwd`/.gradle
 
 build:
   stage: build
-  script: ./backend/gradle --build-cache assemble
+  script: gradle --build-cache assemble
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
     paths:
-      - ./backend/build
-      - ./backend/.gradle
+      - build
+      - .gradle
 
 test:
   stage: test
-  script: ./backend/gradle check
+  script: gradle check
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
     paths:
-      - ./backend/build
-      - ./backend/.gradle
+      - build
+      - .gradle
