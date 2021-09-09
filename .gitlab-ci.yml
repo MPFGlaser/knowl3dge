@@ -9,6 +9,7 @@
 # https://github.com/gradle/gradle
 
 image: gradle:7.1.1-jdk11
+pull_policy: if-not-present
 
 # Disable the Gradle daemon for Continuous Integration servers as correctness
 # is usually a priority over speed in CI environments. Using a fresh
