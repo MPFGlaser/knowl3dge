@@ -19,11 +19,12 @@ variables:
 
 before_script:
   - cd ./backend
+  - echo $'spring.datasource.url=$DB_URL\nspring.datasource.username=$DB_USERNAME\nspring.datasource.password=$DB_PASSWORD' > config/application.properties
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
 build:
   stage: build
-  script: gradle --build-cache assemble --args='--spring.datasource.url=$DB_URL --spring.datasource.username=$DB_USERNAME --spring.datasource.password=$DB_PASSWORD'
+  script: gradle --build-cache assemble
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
@@ -33,7 +34,7 @@ build:
 
 test:
   stage: test
-  script: gradle check --args='--spring.datasource.url=$DB_URL --spring.datasource.username=$DB_USERNAME --spring.datasource.password=$DB_PASSWORD'
+  script: gradle check
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
