@@ -38,6 +38,7 @@ test_backend:
   stage: test
   script: 
     - gradle check
+    - pwd
     - cd build/test-results/test
     - ls
   cache:
