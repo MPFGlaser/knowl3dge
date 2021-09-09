@@ -24,7 +24,7 @@ before_script:
   - sed -i 's/PASSWORD/$DB_PASSWORD/' ./config/application-dev.properties
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
-build:
+build_backend:
   stage: build
   script: gradle --build-cache assemble
   cache:
@@ -34,7 +34,7 @@ build:
       - build
       - .gradle
 
-test:
+test_backend:
   stage: test
   script: gradle check
   cache:
