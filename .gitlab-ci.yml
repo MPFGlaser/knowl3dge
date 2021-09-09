@@ -38,6 +38,7 @@ test_backend:
   stage: test
   script: 
     - gradle check
+    - cd build/test-results/test
     - ls
   cache:
     key: "$CI_COMMIT_REF_NAME"
