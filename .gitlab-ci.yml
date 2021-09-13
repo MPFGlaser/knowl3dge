@@ -37,7 +37,7 @@ build_backend:
 test_backend:
   stage: test
   script: 
-    - gradle check
+    - gradle check --args='--spring.profiles.active=dev'
     - pwd
     - cd build/test-results/test
     - ls
