@@ -1,11 +1,7 @@
 package nl.mpfglaser.knowl3dge.repository
 
 import nl.mpfglaser.knowl3dge.model.Article
-import org.springframework.stereotype.Repository
+import org.springframework.data.jpa.repository.JpaRepository
 
-@Repository
-class ArticleRepository{
-//    fun findAll() : List<Article>{
-//        // Should do something here with an ORM
-//    }
+interface ArticleRepository: JpaRepository<Article, Int> {
 }
