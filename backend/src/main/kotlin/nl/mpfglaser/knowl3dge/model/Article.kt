@@ -27,4 +27,7 @@ open class Article {
 
     @Column(name = "edit_date")
     open var editDate: Instant? = null
+
+    @Column(name = "visible", nullable = false)
+    open var visible: Boolean? = false
 }
