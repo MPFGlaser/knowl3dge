@@ -15,11 +15,11 @@ open class Article {
     open var authorId: Int? = null
 
     @Lob
-    @Column(name = "title")
+    @Column(name = "title", columnDefinition = "TEXT")
     open var title: String? = null
 
     @Lob
-    @Column(name = "content")
+    @Column(name = "content", columnDefinition = "LONGTEXT")
     open var content: String? = null
 
     @Column(name = "creation_date")
