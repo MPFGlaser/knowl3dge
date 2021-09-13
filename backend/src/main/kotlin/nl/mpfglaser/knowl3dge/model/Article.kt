@@ -14,6 +14,11 @@ open class Article {
     @Column(name = "author_id")
     open var authorId: Int? = null
 
+    @Lob
+    @Column(name = "title")
+    open var title: String? = null
+
+    @Lob
     @Column(name = "content")
     open var content: String? = null
 
