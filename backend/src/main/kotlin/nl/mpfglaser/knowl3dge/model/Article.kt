@@ -1,27 +1,25 @@
 package nl.mpfglaser.knowl3dge.model
 
-import java.util.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Table
+import java.time.Instant
+import javax.persistence.*
 
-@Entity
 @Table(name = "articles")
-class Article {
+@Entity
+open class Article {
     @Id
-    @Column(name = "id")
-    var id: Int = -1
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    open var id: Int? = null
 
     @Column(name = "author_id")
-    var author_id: Int = -1
-
-    @Column(name = "creation_date")
-    var creation_date: Date = Date()
-
-    @Column(name = "edit_date")
-    var edit_date: Date = Date()
+    open var authorId: Int? = null
 
     @Column(name = "content")
-    var content: String = "No content found"
+    open var content: String? = null
+
+    @Column(name = "creation_date")
+    open var creationDate: Instant? = null
+
+    @Column(name = "edit_date")
+    open var editDate: Instant? = null
 }
