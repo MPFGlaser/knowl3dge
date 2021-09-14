@@ -38,7 +38,7 @@ build_backend:
 test_backend:
   stage: test
   script: 
-    - gradle check --debug
+    - gradle check
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
