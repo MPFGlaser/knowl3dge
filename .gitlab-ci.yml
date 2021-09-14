@@ -51,3 +51,4 @@ test_backend:
     when: always
     reports:
       junit: build/test-results/test/TEST-*.xml
+      test2: build/reports/tests/test/index.html
