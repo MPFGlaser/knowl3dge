@@ -49,5 +49,8 @@ test_backend:
       - .gradle
   artifacts:
     when: always
+    paths:
+      - build/reports/tests/test/index.html
+    expire_in: 1 week
     reports:
-      junit: build/reports/tests/test/index.html
+      junit: build/test-results/test/TEST-*.xml
