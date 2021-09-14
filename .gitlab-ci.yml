@@ -19,9 +19,8 @@ variables:
 
 before_script:
   - cd ./backend
-  - sed -i 's/$DB_OLD_URL/$DB_URL/' ./config/application-dev.properties
-  - sed -i 's/USERNAME/$DB_USERNAME/' ./config/application-dev.properties
-  - sed -i 's/PASSWORD/$DB_PASSWORD/' ./config/application-dev.properties
+  - sed --version
+  - cp -fr $application_properties_dev config/application.properties
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
 build_backend:
@@ -36,11 +35,7 @@ build_backend:
 
 test_backend:
   stage: test
-  script: 
-    - gradle check
-    - pwd
-    - cd build/test-results/test
-    - ls
+  script: gradle check
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -50,4 +45,4 @@ test_backend:
   artifacts:
     when: always
     reports:
-      junit: build/test-results/test/TEST-*.xml
+      junit: backend/build/test-results/test/TEST-*.xml
