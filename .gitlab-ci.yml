@@ -35,9 +35,7 @@ build_backend:
 
 test_backend:
   stage: test
-  script: 
-    - gradle check
-    - tree build/test-results
+  script: gradle check
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -47,4 +45,4 @@ test_backend:
   artifacts:
     when: always
     reports:
-      junit: build/test-results/test/TEST-*.xml
+      junit: ./build/test-results/test/TEST-*.xml
