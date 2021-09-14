@@ -35,9 +35,7 @@ build_backend:
 
 test_backend:
   stage: test
-  script: 
-    - cat ./config/application-dev.properties
-    - gradle check
+  script: gradle check
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
