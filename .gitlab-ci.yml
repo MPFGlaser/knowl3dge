@@ -24,6 +24,7 @@ before_script:
   - sed -i 's/USERNAME/$DB_USERNAME/' ./config/application-dev.properties
   - sed -i 's/PASSWORD/$DB_PASSWORD/' ./config/application-dev.properties
   - mv ./config/application-dev.properties ./config/application.properties
+  - cat ./config/application.properties
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
 build_backend:
