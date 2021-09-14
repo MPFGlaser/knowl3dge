@@ -19,6 +19,7 @@ variables:
 
 before_script:
   - cd ./backend
+  - rm ./config/application-prod.properties
   - sed -i 's/$DB_OLD_URL/$DB_URL/' ./config/application-dev.properties
   - sed -i 's/USERNAME/$DB_USERNAME/' ./config/application-dev.properties
   - sed -i 's/PASSWORD/$DB_PASSWORD/' ./config/application-dev.properties
@@ -37,8 +38,7 @@ build_backend:
 test_backend:
   stage: test
   script: 
-    - gradle check --stacktrace
-    - cat build/reports/tests/test/index.html
+    - gradle check --debug
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
