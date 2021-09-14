@@ -41,12 +41,7 @@ test_backend:
   stage: test
   script: 
     - gradle check
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: pull
-    paths:
-      - build
-      - .gradle
+  cache: []
   artifacts:
     when: always
     paths:
