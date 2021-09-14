@@ -37,7 +37,7 @@ build_backend:
 test_backend:
   stage: test
   script: 
-    - gradle check --scan
+    - gradle check --stacktrace
     - cat build/reports/tests/test/index.html
   cache:
     key: "$CI_COMMIT_REF_NAME"
