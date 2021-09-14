@@ -20,7 +20,7 @@ variables:
 before_script:
   - cd ./backend
   - sed --version
-  - cp -fr $application_properties_dev config/application-dev.properties
+  - cp -fr $application_properties_dev config/application.properties
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
 build_backend:
