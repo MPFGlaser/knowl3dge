@@ -8,7 +8,7 @@
 # https://gradle.org/
 # https://github.com/gradle/gradle
 
-image: gradle:alpine
+image: gradle:7.1.1-jdk11
 
 # Disable the Gradle daemon for Continuous Integration servers as correctness
 # is usually a priority over speed in CI environments. Using a fresh
@@ -18,9 +18,12 @@ variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
 before_script:
+  - cd ./backend
+  - sed --version
+  - cp -fr $application_properties_dev config/application.properties
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
-build:
+build_backend:
   stage: build
   script: gradle --build-cache assemble
   cache:
@@ -30,7 +33,7 @@ build:
       - build
       - .gradle
 
-test:
+test_backend:
   stage: test
   script: gradle check
   cache:
@@ -39,3 +42,7 @@ test:
     paths:
       - build
       - .gradle
+  artifacts:
+    when: always
+    reports:
+      junit: backend/build/test-results/test/TEST-*.xml

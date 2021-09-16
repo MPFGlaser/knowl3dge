@@ -22,6 +22,10 @@ Lastly, a statistics page will allow users and administrators alike to view what
 
 All planning, including user stories, backlog, and sprint planning takes place on [my Jira board](https://mpfglaser.atlassian.net/jira/software/projects/KNOW/boards/1/backlog). Please request access if you cannot see it.  
 
+## Build instructions
+This project (for now just the backend) is built using Gradle 7.1.1. To build, simply clone the repository and run the `gradle build` command inside of the `backend` directory. Running it in the wrong location will result in the build failing.  
+When running the application, it's important to have your connection details in the `application.properties` file, which either resides in the `backend/config` directory, or next to the `.jar` file after building. Templates of these files can be found in the `config/application-dev.properties` and `config/application-prod.properties` files. Be sure to **rename** them to `application.properties` because otherwise the application will **not** work. While the choice of database server and technology are free, this project was developed with MySQL in mind. Template files for an empty database and a pre-populated one (with dummy data) can be found in the `documentation/database` directory.
+
 ## Framework Selection
 
 ### Frontend
@@ -37,16 +41,16 @@ Details to follow soon.
 
 | URL | Resource | Operation | Description |
 |-----|----------|-----------|-------------|
-| /users | Users | GET | Gets a list of all users |
-| /users/{id} | Users | GET | Gets user with id {id} |
-| /users/{id} | Users | DELETE | Deletes user with id {id} |
-| /users/{id} | Users | PUT | Updates user with id {id} |
-| /users | Users | POST | Creates a new user |
-| /articles | Articles | GET | Gets a list of all Articles |
-| /articles/{id} | Articles | GET | Gets article with id {id} |
-| /articles/?printerType=printerType | Articles | GET | Gets articles with a specific printerType |
-| /articles/?filamentType=filamentType | Articles | GET | Get articles with a specific filamentType |
-| /articles/?issueType=issueType | Articles | GET | Gets articles with a specific issueType |
-| /articles/{id} | Articles | DELETE | Deletes article with id {id} |
-| /articles/{id} | Articles | PUT | Updates article with id {id} |
-| /articles | Articles | POST | Creates a new article |
+| /api/users | Users | GET | Gets a list of all users |
+| /api/users/{id} | Users | GET | Gets user with id {id} |
+| /api/users/{id} | Users | DELETE | Deletes user with id {id} |
+| /api/users/{id} | Users | PUT | Updates user with id {id} |
+| /api/users | Users | POST | Creates a new user |
+| /api/articles | Articles | GET | Gets a list of all Articles |
+| /api/articles/{id} | Articles | GET | Gets article with id {id} |
+| /api/articles?printerType=printerType | Articles | GET | Gets articles with a specific printerType |
+| /api/articles?filamentType=filamentType | Articles | GET | Get articles with a specific filamentType |
+| /api/articles?issueType=issueType | Articles | GET | Gets articles with a specific issueType |
+| /api/articles/{id} | Articles | DELETE | Deletes article with id {id} |
+| /api/articles/{id} | Articles | PUT | Updates article with id {id} |
+| /api/articles | Articles | POST | Creates a new article |
