@@ -24,7 +24,7 @@ All planning, including user stories, backlog, and sprint planning takes place o
 
 ## Build instructions
 This project (for now just the backend) is built using Gradle 7.1.1. To build, simply clone the repository and run the `gradle build` command inside of the `backend` directory. Running it in the wrong location will result in the build failing.  
-When running the application, it's important to have your connection details in the `application.properties` file, which either resides in the `config` directory, or next to the `.jar` file after building. Templates of these files can be found in the `config/application-dev.properties` and `config/application-prod.properties` files. Be sure to **rename** them to `application.properties` because otherwise the application will **not** work. While the choice of database server and technology are free, this project was developed with MySQL in mind. Template files for an empty database and a pre-populated one (with dummy data) can be found in the `documentation/database` directory.
+When running the application, it's important to have your connection details in the `application.properties` file, which either resides in the `backend/config` directory, or next to the `.jar` file after building. Templates of these files can be found in the `config/application-dev.properties` and `config/application-prod.properties` files. Be sure to **rename** them to `application.properties` because otherwise the application will **not** work. While the choice of database server and technology are free, this project was developed with MySQL in mind. Template files for an empty database and a pre-populated one (with dummy data) can be found in the `documentation/database` directory.
 
 ## Framework Selection
 
