@@ -44,9 +44,9 @@ Details to follow soon.
 | /api/users | Users | POST | Creates a new user |
 | /api/articles | Articles | GET | Gets a list of all Articles |
 | /api/articles/{id} | Articles | GET | Gets article with id {id} |
-| /api/articles/?printerType=printerType | Articles | GET | Gets articles with a specific printerType |
-| /api/articles/?filamentType=filamentType | Articles | GET | Get articles with a specific filamentType |
-| /api/articles/?issueType=issueType | Articles | GET | Gets articles with a specific issueType |
+| /api/articles?printerType=printerType | Articles | GET | Gets articles with a specific printerType |
+| /api/articles?filamentType=filamentType | Articles | GET | Get articles with a specific filamentType |
+| /api/articles?issueType=issueType | Articles | GET | Gets articles with a specific issueType |
 | /api/articles/{id} | Articles | DELETE | Deletes article with id {id} |
 | /api/articles/{id} | Articles | PUT | Updates article with id {id} |
 | /api/articles | Articles | POST | Creates a new article |
