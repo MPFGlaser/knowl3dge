@@ -2,6 +2,8 @@
 
 ## Introduction
 
+In this document the architecture of the software (KNOWL3DGE) will be described and drawn out in several diagrams following the [C4 model(https://c4model.com/)].
+
 ## System Context (C1)
 
 ## Containers & Tech Choices (C2)
