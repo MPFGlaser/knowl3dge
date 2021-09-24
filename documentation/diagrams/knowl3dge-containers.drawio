@@ -52,7 +52,7 @@
                     </mxCell>
                 </object>
                 <mxCell id="14" value="KNOWL3DGE System" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;shadow=0;glass=0;dashed=1;sketch=0;" vertex="1" parent="1">
-                    <mxGeometry x="39" y="620" width="141" height="20" as="geometry"/>
+                    <mxGeometry x="39" y="620" width="131" height="20" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
