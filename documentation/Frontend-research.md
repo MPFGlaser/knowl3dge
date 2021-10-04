@@ -36,12 +36,12 @@ Both frameworks are reasonably popular, but on both Google Trends and Stack Over
 
 ##### **Google Trends**
 
-![Popularity graph on Google Trends](media\google_trends.png)
+![Popularity graph on Google Trends](media/google_trends.png)
 The popularity on Google Trends[1] shows how often people search for either framework. While this does not reflect real-world usage, it gives an indication of how often people look up the frameworks for troubleshooting, documentation, educational purposes, or just out of curiosity. Out of the two, React comes out on top, but both seem reasonably popular and are following a similar trend.
 
 ##### **Stack Overflow Trends**
 
-![Popularity graph on Stack Overflow Trends](media\stackoverflow_trends.png)  
+![Popularity graph on Stack Overflow Trends](media/stackoverflow_trends.png)  
 The data from Stack Overflow[2] again shows higher popularity for React than for Angular. This can be explained by the fact that React is easier to learn and thus attracts more new programmers looking to start with their first web-application. However, it does not necessarily indicate that one framework is more popular than the other when it comes to use within companies.
 
 ### Which framework is the most future-proof?
