@@ -54,6 +54,8 @@ Because of Angular's strict typing, more complex structure, and other features o
 
 ### Conclusion
 
+Both React and Angular are quite favourable to choose for this project, as both have their pros and cons.
+As I've already chosen Kotlin for the backend because I like challenges, I'm picking Angular for the frontend. While it won't be an easy journey, being used to the structure in C#, I think I'll benefit from the structure TypeScript provides in Angular. The more extensive and collated documentation is another pro. Another factor I weighed is that, while not related to my studies at FHICT, I think that learning TypeScript can advance my personal skills in the world of software engineering. It will, for instance, allow me to write backends with Node.js for personal projects.
 
 ## Sources
 
