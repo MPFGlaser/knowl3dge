@@ -22,11 +22,13 @@ The two also differ in the language used. Both use JavaScript in a way, but in t
 
 With regards to UI components, both allow a collection of Material Design components to be easily downloaded.[4] Angular's is first-party because both are developed by Google, while React's is third-party.
 
-Dependency injection is something that we as students have to prove our mastery of in this semester. Both support dependency injection.[4][8]  
+Dependency injection is something that we as students have to prove our mastery of in this semester. Both support dependency injection.[4][8] Some sources, however, say that React does not (fully) support dependency injection.[9]  
 
 Another difference is that Angular uses a "real" DOM while React uses a virtual DOM. Effectively, this means that for tiny changes within the webpage, React is faster because it does not have to re-write the HTML to apply the update.[10][11]
 
 ### Which framework has the most extensive documentation?
+
+Angular's documentation could be considered more comprehensive, as it covers everything necessary for a front-end application in the same place. When using React, however, your documentation and references will be more fractures, as React requires more use of third party libraries.[4]
 
 #### Popularity
 
@@ -44,7 +46,11 @@ The data from Stack Overflow[2] again shows higher popularity for React than for
 
 ### Which framework is the most future-proof?
 
+Considering I aspire my applications to grow over time, one would think Angular would be the best fit, as it's often used for other big projects. However, it depends one one's definition of "a large project". It mostly comes down to preference[12], so choose wisely between ease of starting out and the long-term benefits of well-structured applications.
+
 ### Which framework is the most beginner-friendly?
+
+Because of Angular's strict typing, more complex structure, and other features of TypeScript that are handy for debugging it has a steeper learning curve than React, which is regarded as easy for beginners and welcoming.[4][9] As such, when it comes to ease of learning, React definitely comes out on top.
 
 ### Conclusion
 
@@ -61,4 +67,5 @@ The data from Stack Overflow[2] again shows higher popularity for React than for
 [8] https://marmelab.com/blog/2019/03/13/react-dependency-injection.html  
 [9] https://www.freecodecamp.org/news/angular-vs-react-what-to-choose-for-your-app-2/   
 [10] https://www.cuelogic.com/blog/what-are-the-differences-between-angular-and-react  
-[11] https://www.cleveroad.com/blog/angular-vs-react
+[11] https://www.cleveroad.com/blog/angular-vs-react  
+[12] https://www.dottedsquirrel.com/is-angular-dying-because-of-react/ 
