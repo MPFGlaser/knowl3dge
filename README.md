@@ -30,7 +30,7 @@ When running the application, it's important to have your connection details in 
 
 ### Frontend
 
-To read my research document I wrote for choosing Angular as my frontend framework, please refer to the [Frontend-research.md](https://git.fhict.nl/knowl3dge/knowl3dge/-/blob/f129f9fdb8fdc23c0fd75129bda14a220af84cc6/documentation/Frontend-research.md) document.
+To read my research document I wrote for choosing Angular as my frontend framework, please refer to the [Frontend-research.md](documentation/Frontend-research.md) document.
 
 ### Backend
 
