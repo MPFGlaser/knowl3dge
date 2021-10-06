@@ -1,0 +1,6 @@
+<mat-card class="article-card" *ngIf="article">
+  <mat-card-title> {{ article.title }} </mat-card-title>
+  <mat-card-content *ngIf="article.content">
+    <p>{{ article.content }}</p>
+  </mat-card-content>
+</mat-card>
