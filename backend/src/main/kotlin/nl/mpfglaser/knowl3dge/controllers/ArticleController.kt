@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 // ArticleController always returns a ResponseEntity containing an object and an HttpResponse.
+@CrossOrigin(origins = ["http://localhost:4200"])
 @RestController
 @RequestMapping("/api/articles")
 class ArticleController(repository: ArticleRepository) {
