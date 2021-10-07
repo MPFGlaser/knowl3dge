@@ -49,19 +49,26 @@ export class ArticleEditorComponent implements OnInit {
       console.warn('incorrect article id provided');
       this.router.navigate(['/404']);
     }
+    this.populateFields();
+  }
+
+  populateFields(): void {
+    this.editForm.get('Title')?.setValue(this.article?.title);
+    this.editForm.get('Author')?.setValue(this.article?.authorId);
+    this.editForm.get('Content')?.setValue(this.article?.content);
   }
 
   onSubmit(): void {
-    console.warn(this.editForm.value)
-    console.warn(this.editForm.value['Title'])
-    console.warn(new Date().getTime())
+    console.warn(this.editForm.value);
+    console.warn(this.editForm.value['Title']);
+    console.warn(new Date().getTime());
     let articleSubmitted = <Article>{
       id: 0,
       authorId: this.editForm.value['Author'],
       title: this.editForm.value['Title'],
       content: this.editForm.value['Content'],
       visible: true,
-    }
+    };
 
     if (this.editing) {
       // Set edit date to current unix timestamp, leave creation date as is.
