@@ -3,7 +3,7 @@ export interface Article {
   authorId: number;
   title: string;
   content: string;
-  creationDate: number;
-  editDate: number;
+  creationDate?: number;
+  editDate?: number;
   visible: boolean;
 }
