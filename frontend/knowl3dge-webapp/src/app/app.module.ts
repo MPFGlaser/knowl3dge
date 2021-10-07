@@ -12,8 +12,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import { MatIconModule } from '@angular/material/icon';
 import { ArticleDetailsComponent } from './article-details/article-details.component';
+import { ArticleEditorComponent } from './article-editor/article-editor.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { ArticleDetailsComponent } from './article-details/article-details.compo
     ArticleListComponent,
     TopBarComponent,
     ArticleDetailsComponent,
+    ArticleEditorComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
