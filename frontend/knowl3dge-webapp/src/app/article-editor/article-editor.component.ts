@@ -13,6 +13,7 @@ export class ArticleEditorComponent implements OnInit {
   article: Article | undefined;
   public title = 'New Article';
   private editing = false;
+  private articleIdFromRoute = 0;
 
   editForm = this.formBuilder.group({
     Title: '',
@@ -29,11 +30,11 @@ export class ArticleEditorComponent implements OnInit {
 
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
-    const articleIdFromRoute = Number(routeParams.get('articleId'));
+    this.articleIdFromRoute = Number(routeParams.get('articleId'));
 
     // If the url contains an article id, get the article
-    if (articleIdFromRoute) {
-      this.getArticle(articleIdFromRoute);
+    if (this.articleIdFromRoute) {
+      this.getArticle(this.articleIdFromRoute);
       this.editing = true;
       this.title = 'Edit Article';
     }
@@ -65,6 +66,7 @@ export class ArticleEditorComponent implements OnInit {
     if (this.editing) {
       // Set edit date to current unix timestamp, leave creation date as is.
       console.warn('Article edited', this.editForm.value);
+      articleSubmitted.id = this.articleIdFromRoute;
       articleSubmitted.creationDate = <number>this.article?.creationDate;
       articleSubmitted.editDate = new Date().getTime();
       this.articleService.editArticle(articleSubmitted);
