@@ -1,5 +1,5 @@
 <mat-card class="article-editor-card">
-  <mat-card-title>Article Editor</mat-card-title>
+  <mat-card-title>{{ title }}</mat-card-title>
   <mat-card-content>
     <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
       <div>

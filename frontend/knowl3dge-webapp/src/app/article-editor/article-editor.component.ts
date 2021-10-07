@@ -11,6 +11,8 @@ import { ArticleService } from './../services/article.service';
 })
 export class ArticleEditorComponent implements OnInit {
   article: Article | undefined;
+  public title = 'New Article';
+  private editing = false;
 
   editForm = this.formBuilder.group({
     Title: '',
@@ -25,11 +27,6 @@ export class ArticleEditorComponent implements OnInit {
     private articleService: ArticleService
   ) {}
 
-  onSubmit(): void {
-    console.warn('Article edited', this.editForm.value);
-    this.editForm.reset();
-  }
-
   ngOnInit(): void {
     const routeParams = this.route.snapshot.paramMap;
     const articleIdFromRoute = Number(routeParams.get('articleId'));
@@ -37,9 +34,12 @@ export class ArticleEditorComponent implements OnInit {
     // If the url contains an article id, get the article
     if (articleIdFromRoute) {
       this.getArticle(articleIdFromRoute);
+      this.editing = true;
+      this.title = 'Edit Article';
     }
   }
 
+  // Tries to get article by id. If it does not exist, redirect to 404 page
   async getArticle(id: number) {
     try {
       const article = await this.articleService.getArticle(id).toPromise();
@@ -48,5 +48,32 @@ export class ArticleEditorComponent implements OnInit {
       console.warn('incorrect article id provided');
       this.router.navigate(['/404']);
     }
+  }
+
+  onSubmit(): void {
+    console.warn(this.editForm.value)
+    console.warn(this.editForm.value['Title'])
+    console.warn(new Date().getTime())
+    let articleSubmitted = <Article>{
+      id: 0,
+      authorId: this.editForm.value['Author'],
+      title: this.editForm.value['Title'],
+      content: this.editForm.value['Content'],
+      visible: true,
+    }
+
+    if (this.editing) {
+      // Set edit date to current unix timestamp, leave creation date as is.
+      console.warn('Article edited', this.editForm.value);
+      articleSubmitted.creationDate = <number>this.article?.creationDate;
+      articleSubmitted.editDate = new Date().getTime();
+      this.articleService.editArticle(articleSubmitted);
+    } else {
+      // Set creation date to current unix timestamp, leave edit date null
+      console.warn('Article created', this.editForm.value);
+      articleSubmitted.creationDate = new Date().getTime();
+      this.articleService.createArticle(articleSubmitted);
+    }
+    this.editForm.reset();
   }
 }

@@ -18,4 +18,15 @@ export class ArticleService {
     return this.http.get<Article>(`${this.apiBaseUrl}/${id}`);
   }
 
+  createArticle(article: Article){
+    const headers = { 'content-type': 'application/json'}
+    const body = JSON.stringify(article);
+    return this.http.post<Article>(`${this.apiBaseUrl}/new`, body,{'headers':headers}).subscribe();
+  }
+
+  editArticle(article: Article){
+    const headers = { 'content-type': 'application/json'}
+    const body = JSON.stringify(article);
+    return this.http.put<Article>(`${this.apiBaseUrl}/edit`, body,{'headers':headers}).subscribe();
+  }
 }
