@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Article } from '../interfaces/article';
 import { ArticleService } from './../services/article.service';
 
@@ -21,6 +21,7 @@ export class ArticleEditorComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private articleService: ArticleService
   ) {}
 
@@ -30,17 +31,22 @@ export class ArticleEditorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     const routeParams = this.route.snapshot.paramMap;
-    console.warn(routeParams);
-
     const articleIdFromRoute = Number(routeParams.get('articleId'));
-    console.warn(routeParams);
-    this.getArticle(articleIdFromRoute);
+
+    // If the url contains an article id, get the article
+    if (articleIdFromRoute) {
+      this.getArticle(articleIdFromRoute);
+    }
   }
 
   async getArticle(id: number) {
-    const article = await this.articleService.getArticle(id).toPromise();
-    this.article = article;
+    try {
+      const article = await this.articleService.getArticle(id).toPromise();
+      this.article = article;
+    } catch (error) {
+      console.warn('incorrect article id provided');
+      this.router.navigate(['/404']);
+    }
   }
 }

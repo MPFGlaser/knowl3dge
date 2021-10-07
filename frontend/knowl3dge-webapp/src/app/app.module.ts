@@ -18,6 +18,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { ArticleDetailsComponent } from './article-details/article-details.component';
 import { ArticleEditorComponent } from './article-editor/article-editor.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   imports: [
@@ -36,9 +37,10 @@ import { ArticleEditorComponent } from './article-editor/article-editor.componen
     HttpClientModule,
     RouterModule.forRoot([
       { path: '', component: ArticleListComponent },
-      { path: 'articles/:articleId', component: ArticleDetailsComponent },
-      { path: 'articles/edit', component: ArticleEditorComponent },
       { path: 'articles/edit/:articleId', component: ArticleEditorComponent },
+      { path: 'articles/edit', pathMatch: 'full', component: ArticleEditorComponent},
+      { path: 'articles/:articleId', component: ArticleDetailsComponent },
+      { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
     ]),
   ],
   declarations: [
@@ -47,6 +49,7 @@ import { ArticleEditorComponent } from './article-editor/article-editor.componen
     TopBarComponent,
     ArticleDetailsComponent,
     ArticleEditorComponent,
+    PageNotFoundComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
