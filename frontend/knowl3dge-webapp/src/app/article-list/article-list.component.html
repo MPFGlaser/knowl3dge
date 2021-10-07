@@ -1,19 +1,23 @@
 <h2>Articles</h2>
-
-<div *ngFor="let article of articles">
-  <mat-card class="article-card">
-    <mat-card-title> {{ article.title }} </mat-card-title>
-    <mat-card-content *ngIf="article.content">
-      <p>{{ article.content }}</p>
-    </mat-card-content>
-    <mat-divider inset></mat-divider>
-    <mat-card-actions>
-      <button mat-button [routerLink]="['/articles', article.id]">
-        Learn more
-      </button>
-      <button mat-button [routerLink]="['/articles/edit', article.id]">
-        Edit
-      </button>
-    </mat-card-actions>
-  </mat-card>
+<div>
+  <div *ngFor="let article of articles">
+    <mat-card class="article-card">
+      <mat-card-title> {{ article.title }} </mat-card-title>
+      <mat-card-content *ngIf="article.content">
+        <p>{{ article.content }}</p>
+      </mat-card-content>
+      <mat-divider inset></mat-divider>
+      <mat-card-actions>
+        <button mat-button [routerLink]="['/articles', article.id]">
+          Learn more
+        </button>
+        <button mat-button [routerLink]="['/articles/edit', article.id]">
+          Edit
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <button mat-fab color="primary" class="button-add">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>

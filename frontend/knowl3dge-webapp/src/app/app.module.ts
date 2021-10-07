@@ -12,6 +12,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
 import { ArticleDetailsComponent } from './article-details/article-details.component';
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ArticleDetailsComponent } from './article-details/article-details.compo
     MatCardModule,
     MatDividerModule,
     MatButtonModule,
+    MatIconModule,
     HttpClientModule,
     RouterModule.forRoot([
       { path: '', component: ArticleListComponent },
