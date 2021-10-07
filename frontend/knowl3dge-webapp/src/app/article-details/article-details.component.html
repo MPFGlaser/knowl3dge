@@ -3,4 +3,10 @@
   <mat-card-content *ngIf="article.content">
     <p>{{ article.content }}</p>
   </mat-card-content>
+  <mat-divider inset></mat-divider>
+  <mat-card-actions>
+    <button mat-button [routerLink]="['/articles/edit', article.id]">
+      Edit
+    </button>
+  </mat-card-actions>
 </mat-card>
