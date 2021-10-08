@@ -26,10 +26,10 @@ open class Article {
     open var content: String? = null
 
     @Column(name = "creation_date")
-    open var creationDate: Instant? = null
+    open var creationDate: Long? = null
 
     @Column(name = "edit_date")
-    open var editDate: Instant? = null
+    open var editDate: Long? = null
 
     @Column(name = "visible", nullable = false)
     open var visible: Boolean? = false

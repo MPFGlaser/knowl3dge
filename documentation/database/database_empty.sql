@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Sep 16, 2021 at 12:13 PM
+-- Generation Time: Oct 08, 2021 at 03:45 PM
 -- Server version: 8.0.26
 -- PHP Version: 7.4.23
 
@@ -32,9 +32,33 @@ CREATE TABLE `articles` (
   `author_id` int DEFAULT NULL,
   `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `creation_date` datetime(6) DEFAULT NULL,
-  `edit_date` datetime(6) DEFAULT NULL,
+  `creation_date` bigint DEFAULT NULL,
+  `edit_date` bigint DEFAULT NULL,
   `visible` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tags`
+--
+
+CREATE TABLE `tags` (
+  `id` int NOT NULL,
+  `name` varchar(32) DEFAULT NULL,
+  `type` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tags_assigned`
+--
+
+CREATE TABLE `tags_assigned` (
+  `id` int NOT NULL,
+  `tag_id` int DEFAULT NULL,
+  `article_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -48,6 +72,21 @@ ALTER TABLE `articles`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tags`
+--
+ALTER TABLE `tags`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tags_id_uindex` (`id`);
+
+--
+-- Indexes for table `tags_assigned`
+--
+ALTER TABLE `tags_assigned`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `tags_assigned_articles_id_fk` (`article_id`),
+  ADD KEY `tags_assigned_tags_id_fk` (`tag_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -56,6 +95,29 @@ ALTER TABLE `articles`
 --
 ALTER TABLE `articles`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tags`
+--
+ALTER TABLE `tags`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tags_assigned`
+--
+ALTER TABLE `tags_assigned`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tags_assigned`
+--
+ALTER TABLE `tags_assigned`
+  ADD CONSTRAINT `tags_assigned_articles_id_fk` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`),
+  ADD CONSTRAINT `tags_assigned_tags_id_fk` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

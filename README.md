@@ -1,4 +1,4 @@
-# KNOWL3DGE
+# [KNOWL3DGE](https://git.fhict.nl/knowl3dge/knowl3dge)
 
 ## Product Description
 
@@ -30,7 +30,7 @@ When running the application, it's important to have your connection details in 
 
 ### Frontend
 
-TBD
+To read my research document I wrote for choosing Angular as my frontend framework, please refer to the [Frontend-research.md](documentation/Frontend-research.md) document.
 
 ### Backend
 
@@ -54,3 +54,13 @@ Details to follow soon.
 | /api/articles/{id} | Articles | DELETE | Deletes article with id {id} |
 | /api/articles/{id} | Articles | PUT | Updates article with id {id} |
 | /api/articles | Articles | POST | Creates a new article |
+| /api/tags/all | Tags | GET | Gets all tags |
+| /api/tags/edit | Tags | PUT | Updates a tag |
+| /api/tags/new | Tags | POST | Creates a new tag |
+| /api/tags/delete/{id} | Tags | DELETE | Deletes a tag |
+| /api/tags/new_assignment | TagsAssigned | POST | Creates a new tag assignment | 
+| /api/tags/all_assigned | TagsAssigned | GET | Gets all assigned tags |
+| /api/tags/all_assigned/aid/{id} | TagsAssigned | GET | Gets all assigned tags for article with {id} |
+| /api/tags/all_assigned/tid/{id} | TagsAssigned | GET | Gets all assigned articles for tag with {id} |
+| /api/tags/edit_assignment | TagsAssigned | PUT | Updates a tag assignment |
+| /api/tags/delete_assignment | TagsAssigned | DELETE | Deletes a tag assignment |
