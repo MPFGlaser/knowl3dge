@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Sep 16, 2021 at 12:13 PM
+-- Generation Time: Oct 07, 2021 at 05:39 PM
 -- Server version: 8.0.26
 -- PHP Version: 7.4.23
 
@@ -32,8 +32,8 @@ CREATE TABLE `articles` (
   `author_id` int DEFAULT NULL,
   `title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
-  `creation_date` datetime(6) DEFAULT NULL,
-  `edit_date` datetime(6) DEFAULT NULL,
+  `creation_date` bigint DEFAULT NULL,
+  `edit_date` bigint DEFAULT NULL,
   `visible` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
