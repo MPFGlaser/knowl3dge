@@ -15,7 +15,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
+import {MatChipsModule} from '@angular/material/chips';
 import { ArticleDetailsComponent } from './article-details/article-details.component';
 import { ArticleEditorComponent } from './article-editor/article-editor.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -34,13 +35,18 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
+    MatChipsModule,
     HttpClientModule,
     RouterModule.forRoot([
       { path: '', component: ArticleListComponent },
       { path: 'articles/edit/:articleId', component: ArticleEditorComponent },
-      { path: 'articles/edit', pathMatch: 'full', component: ArticleEditorComponent},
+      {
+        path: 'articles/edit',
+        pathMatch: 'full',
+        component: ArticleEditorComponent,
+      },
       { path: 'articles/:articleId', component: ArticleDetailsComponent },
-      { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
+      { path: '**', component: PageNotFoundComponent }, // Wildcard route for a 404 page
     ]),
   ],
   declarations: [
