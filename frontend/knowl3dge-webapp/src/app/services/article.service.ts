@@ -8,25 +8,29 @@ import { HttpClient } from '@angular/common/http';
 export class ArticleService {
   apiBaseUrl = 'http://localhost:8080/api/articles';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getArticles(){
+  getArticles() {
     return this.http.get<Article[]>(`${this.apiBaseUrl}`);
   }
 
-  getArticle(id: number){
+  getArticle(id: number) {
     return this.http.get<Article>(`${this.apiBaseUrl}/${id}`);
   }
 
-  createArticle(article: Article){
-    const headers = { 'content-type': 'application/json'}
+  createArticle(article: Article) {
+    const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(article);
-    return this.http.post<Article>(`${this.apiBaseUrl}/new`, body,{'headers':headers}).subscribe();
+    return this.http
+      .post<Article>(`${this.apiBaseUrl}/new`, body, { headers: headers })
+      .subscribe();
   }
 
-  editArticle(article: Article){
-    const headers = { 'content-type': 'application/json'}
+  editArticle(article: Article) {
+    const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(article);
-    return this.http.put<Article>(`${this.apiBaseUrl}/edit`, body,{'headers':headers}).subscribe();
+    return this.http
+      .put<Article>(`${this.apiBaseUrl}/edit`, body, { headers: headers })
+      .subscribe();
   }
 }
