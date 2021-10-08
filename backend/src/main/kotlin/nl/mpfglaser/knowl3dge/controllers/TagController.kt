@@ -19,7 +19,7 @@ class TagController(tagRepository: TagRepository, tagAssignedRepository: TagAssi
     @GetMapping("/all")
     fun findAllTags(): ResponseEntity<List<Tag>> = service.findAllTags()
 
-    @GetMapping("/all_asssigned")
+    @GetMapping("/all_assigned")
     fun findAllAssignedTags(): ResponseEntity<List<TagsAssigned>> = service.findAllAssignedTags()
 
     @GetMapping("/all_assigned_aid/{id}")
