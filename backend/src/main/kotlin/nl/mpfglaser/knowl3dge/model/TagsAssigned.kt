@@ -1,9 +1,6 @@
 package nl.mpfglaser.knowl3dge.model
 
-import javax.persistence.Entity
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
-import javax.persistence.Table
+import javax.persistence.*
 
 @Table(name = "tags_assigned")
 @Entity
@@ -15,4 +12,9 @@ open class TagsAssigned {
     @ManyToOne
     @JoinColumn(name = "article_id")
     open var article: Article? = null
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    open var id: Int? = null
 }
