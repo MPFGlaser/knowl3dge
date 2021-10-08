@@ -41,7 +41,7 @@ export class ArticleEditorComponent implements OnInit {
   }
 
   // Tries to get article by id. If it does not exist, redirect to 404 page
-  async getArticle(id: number) {
+  async getArticle(id: number): Promise<void>{
     try {
       const article = await this.articleService.getArticle(id).toPromise();
       this.article = article;
@@ -60,21 +60,21 @@ export class ArticleEditorComponent implements OnInit {
 
   onSubmit(): void {
     console.warn(this.editForm.value);
-    console.warn(this.editForm.value['Title']);
+    console.warn(this.editForm.value.Title);
     console.warn(new Date().getTime());
-    let articleSubmitted = <Article>{
+    const articleSubmitted = {
       id: 0,
-      authorId: this.editForm.value['Author'],
-      title: this.editForm.value['Title'],
-      content: this.editForm.value['Content'],
+      authorId: this.editForm.value.Author,
+      title: this.editForm.value.Title,
+      content: this.editForm.value.Content,
       visible: true,
-    };
+    } as Article;
 
     if (this.editing) {
       // Set edit date to current unix timestamp, leave creation date as is.
       console.warn('Article edited', this.editForm.value);
       articleSubmitted.id = this.articleIdFromRoute;
-      articleSubmitted.creationDate = <number>this.article?.creationDate;
+      articleSubmitted.creationDate = (this.article?.creationDate as number);
       articleSubmitted.editDate = new Date().getTime();
       this.articleService.editArticle(articleSubmitted);
     } else {
