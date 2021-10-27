@@ -1,11 +1,8 @@
 package nl.mpfglaser.knowl3dge.service
-
 import nl.mpfglaser.knowl3dge.model.Article
 import nl.mpfglaser.knowl3dge.repository.ArticleRepository
-import org.apache.coyote.Response
 import org.springframework.http.ResponseEntity
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.ResponseStatus
 import java.util.*
 
 // Acts as the layer in-between the ArticleController and the ArticleRepository.
@@ -27,6 +24,23 @@ class ArticleService(private val repository: ArticleRepository) {
             return ResponseEntity<Optional<Article>>(result, HttpStatus.OK)
         }
         return ResponseEntity<Optional<Article>>(null, HttpStatus.NOT_FOUND)
+    }
+
+    // Finds all articles matching the given ID(s)
+    fun findAllById(ids: Iterable<Int>): ResponseEntity<List<Article>>{
+        val result = repository.findAllById(ids)
+        if(result.isNotEmpty()){
+            return ResponseEntity<List<Article>>(result, HttpStatus.OK)
+        }
+        return ResponseEntity<List<Article>>(null, HttpStatus.NOT_FOUND)
+    }
+
+    fun findAllByTag(tags: Iterable<Int>): ResponseEntity<List<Article>>{
+        val result = repository.findAllByTag(tags)
+        if(result.isNotEmpty()){
+            return ResponseEntity<List<Article>>(result, HttpStatus.OK)
+        }
+        return ResponseEntity<List<Article>>(null, HttpStatus.NOT_FOUND)
     }
 
     // Saves an article to the repository. Used for PUT and POST.
