@@ -1,14 +1,12 @@
 <h2>Articles</h2>
 <div>
-  <mat-chip-list aria-label="Tags">
-    <mat-chip *ngFor="let tag of tags">{{ tag.name }}</mat-chip>
-  </mat-chip-list>
+  <app-article-chip-filter (selectedTagsChangedEvent)='selectedTagsChanged($event)'></app-article-chip-filter>
   <div>
     <div *ngFor="let article of articles">
       <mat-card class="article-card">
-        <mat-card-title [routerLink]="['/articles', article.id]"> {{ article.title }} </mat-card-title>
+        <mat-card-title [routerLink]="[' /articles', article.id]"> {{ article.title }} </mat-card-title>
         <mat-chip-list *ngIf="checkForTags(article.id)">
-          <mat-chip *ngFor="let assignedTag of checkForTags(article.id)">{{ assignedTag }}</mat-chip>
+          <mat-chip *ngFor="let assignedTag of checkForTags(article.id)">{{ assignedTag.tag?.name }}</mat-chip>
         </mat-chip-list>
         <mat-card-content *ngIf="article.content">
           <p>{{ article.content }}</p>

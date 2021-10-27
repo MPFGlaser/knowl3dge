@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -20,6 +19,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import { ArticleDetailsComponent } from './article-details/article-details.component';
 import { ArticleEditorComponent } from './article-editor/article-editor.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ArticleChipFilterComponent } from './article-chip-filter/article-chip-filter.component';
 
 @NgModule({
   imports: [
@@ -37,17 +37,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     MatInputModule,
     MatChipsModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      { path: '', component: ArticleListComponent },
-      { path: 'articles/edit/:articleId', component: ArticleEditorComponent },
-      {
-        path: 'articles/edit',
-        pathMatch: 'full',
-        component: ArticleEditorComponent,
-      },
-      { path: 'articles/:articleId', component: ArticleDetailsComponent },
-      { path: '**', component: PageNotFoundComponent }, // Wildcard route for a 404 page
-    ]),
   ],
   declarations: [
     AppComponent,
@@ -56,6 +45,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     ArticleDetailsComponent,
     ArticleEditorComponent,
     PageNotFoundComponent,
+    ArticleChipFilterComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
