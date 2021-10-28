@@ -1,6 +1,5 @@
 package nl.mpfglaser.knowl3dge.controllers
 
-import nl.mpfglaser.knowl3dge.model.Article
 import nl.mpfglaser.knowl3dge.model.Tag
 import nl.mpfglaser.knowl3dge.model.TagsAssigned
 import nl.mpfglaser.knowl3dge.repository.TagAssignedRepository

@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param
 
 // Uses the JpaRepository interface, so no need to write any functions for now.
 interface ArticleRepository: JpaRepository<Article, Int> {
-    @Query("SELECT a FROM Article a WHERE a.id in (SELECT at.article.id FROM TagsAssigned at WHERE at.tag.id IN :tags)")
+    @Query("SELECT a FROM Article a WHERE a.id in (SELECT at.articleId.id FROM TagsAssigned at WHERE at.tagId.id IN :tags)")
     fun findAllByTag(@Param("tags") tags: Iterable<Int>?): List<Article>
 }

@@ -5,7 +5,7 @@
   </mat-card-content>
   <div class="chipList">
     <mat-chip-list *ngIf="checkForTags(article.id)">
-      <mat-chip *ngFor="let assignedTag of checkForTags(article.id)">{{ assignedTag.tag?.name }}</mat-chip>
+      <mat-chip *ngFor="let assignedTag of checkForTags(article.id)">{{ assignedTag.tagId?.name }}</mat-chip>
     </mat-chip-list>
   </div>
   <mat-divider inset></mat-divider>
