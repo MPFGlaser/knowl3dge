@@ -41,14 +41,6 @@ export class ArticleListComponent implements OnInit {
     chip.toggleSelected();
   }
 
-  // Shortens the preview bit of the article content
-  shorten(input: string): string {
-    if (input.length > 150) {
-      return input.substring(0, 150).trim() + '...';
-    }
-    return input;
-  }
-
   // Gets articles and shortens their content
   async getArticles(tags?: Tag[]) {
     try {
@@ -56,12 +48,6 @@ export class ArticleListComponent implements OnInit {
       const articles = await this.articleService.getArticles(tags).toPromise();
       this.loading = false;
       this.articles = articles;
-
-      for (let article of articles) {
-        if (article.content) {
-          article.content = this.shorten(article.content);
-        }
-      }
     } catch (error) {
       console.warn(error);
       this.articles = [];
@@ -89,13 +75,5 @@ export class ArticleListComponent implements OnInit {
     } catch (error) {
       console.warn(error);
     }
-  }
-
-  // Checks if an article has tags assigned to it
-  checkForTags(articleId: number): AssignedTag[] {
-    if (this.assignedTags) {
-      return this.assignedTags.filter((x) => x.article?.id == articleId);
-    }
-    return [];
   }
 }
