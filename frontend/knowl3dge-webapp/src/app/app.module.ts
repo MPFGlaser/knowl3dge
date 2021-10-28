@@ -24,6 +24,8 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ArticleCardComponent } from './article-card/article-card.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   imports: [
@@ -54,6 +56,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     PageNotFoundComponent,
     ArticleChipFilterComponent,
     NavBarComponent,
+    ArticleCardComponent,
+    HomeComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
