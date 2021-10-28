@@ -7,17 +7,17 @@ import { AssignedTag } from '../interfaces/assignedTag';
   templateUrl: './article-card.component.html',
   styleUrls: ['./article-card.component.scss'],
 })
-export class ArticleCardComponent implements OnInit{
+export class ArticleCardComponent implements OnInit {
   @Input() article!: Article;
   @Input() assignedTags?: AssignedTag[] = [];
 
-  ngOnInit(){
+  ngOnInit() {
     this.article.content = this.shorten(this.article.content);
   }
   // Checks if an article has tags assigned to it
   checkForTags(articleId: number): AssignedTag[] {
     if (this.assignedTags) {
-      return this.assignedTags.filter((x) => x.article?.id == articleId);
+      return this.assignedTags.filter((x) => x.articleId?.id == articleId);
     }
     return [];
   }
