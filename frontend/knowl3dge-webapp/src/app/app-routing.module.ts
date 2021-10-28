@@ -6,7 +6,7 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const routes: Routes = [
-  { path: '', component: ArticleListComponent },
+  { path: 'articles', component: ArticleListComponent },
   { path: 'articles/edit/:articleId', component: ArticleEditorComponent },
   {
     path: 'articles/edit',
