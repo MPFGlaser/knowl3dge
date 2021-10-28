@@ -16,6 +16,7 @@ export class ArticleListComponent implements OnInit {
   articles!: Article[];
   tags?: Tag[];
   assignedTags?: AssignedTag[];
+  loading: boolean = true;
 
   constructor(
     private articleService: ArticleService,
@@ -51,7 +52,9 @@ export class ArticleListComponent implements OnInit {
   // Gets articles and shortens their content
   async getArticles(tags?: Tag[]) {
     try {
+      this.loading = true;
       const articles = await this.articleService.getArticles(tags).toPromise();
+      this.loading = false;
       this.articles = articles;
 
       for (let article of articles) {
@@ -62,6 +65,7 @@ export class ArticleListComponent implements OnInit {
     } catch (error) {
       console.warn(error);
       this.articles = [];
+      this.loading = true;
     }
   }
 

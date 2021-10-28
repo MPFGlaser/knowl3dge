@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatChipsModule} from '@angular/material/chips';
+import { MatChipsModule } from '@angular/material/chips';
 import { ArticleDetailsComponent } from './article-details/article-details.component';
 import { ArticleEditorComponent } from './article-editor/article-editor.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -23,6 +23,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { MatListModule } from '@angular/material/list';
     LayoutModule,
     MatSidenavModule,
     MatListModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [
     AppComponent,
