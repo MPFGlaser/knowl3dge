@@ -3,7 +3,7 @@
 ## Introduction
 
 In this document the architecture of the software (KNOWL3DGE) will be described and drawn out in several diagrams following the [C4 model(https://c4model.com/)].
-
+*Greyed-out elements are not (yet) implemented.*
 ## System Context (C1)
 
 ![The system context diagram](media/knowl3dge-context.png)
