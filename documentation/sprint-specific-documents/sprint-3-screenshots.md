@@ -16,3 +16,8 @@ Editing page of "Article 2", with the title being changed to "Article #2"
 
 Overview page showing the edited article title "Article #2"
 ![post-edit](media/post-edit.png)
+
+# Unit tests/SonarQube
+
+Because I got stuck with the unit tests (in angular) the coverage is still 0, but this will be improved in the future.
+![sonarqube](media/sonarqube.png)
