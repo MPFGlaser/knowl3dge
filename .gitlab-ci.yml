@@ -1,31 +1,85 @@
-# This file is a template, and might need editing before it works on your project.
-# To contribute improvements to CI/CD templates, please follow the Development guide at:
-# https://docs.gitlab.com/ee/development/cicd/templates.html
-# This specific template is located at:
-# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Gradle.gitlab-ci.yml
+stages:
+  - install
+  - build
+  - test
+  - code-quality
 
-# This is the Gradle build system for JVM applications
-# https://gradle.org/
-# https://github.com/gradle/gradle
-
-image: gradle:7.1.1-jdk11
-
-# Disable the Gradle daemon for Continuous Integration servers as correctness
-# is usually a priority over speed in CI environments. Using a fresh
-# runtime for each build is more reliable since the runtime is completely
-# isolated from any previous builds.
 variables:
-  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  RULES_CHANGES_PATH: "**/*"
+  SONAR_TOKEN: ""
 
-before_script:
-  - cd ./backend
-  - sed --version
-  - cp -fr $application_properties_dev config/application.properties
-  - export GRADLE_USER_HOME=`pwd`/.gradle
+# Only runs the stages on things that have changes, unless on master branch. Saves computing power and time.
+.base-rules:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: always
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: never
+    - if: $CI_COMMIT_TAG
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes:
+        - $RULES_CHANGES_PATH
+    - when: manual
+      allow_failure: true
 
-build_backend:
+# Sets the directory for the backend and grabs the correct image
+.backend:
+  extends: .base-rules
+  image: gradle:7.1.1-jdk11
+  variables:
+    RULES_CHANGES_PATH: "backend/**/*"
+    GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  before_script:
+    - SONAR_TOKEN=${SONAR_BACKEND_TOKEN}
+    - cd ./backend
+    - cp -fr $application_properties_dev config/application.properties
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+
+
+# Sets the directory for the frontend
+.frontend:
+  extends: .base-rules
+  image: node:16.11.1-alpine
+  variables:
+    RULES_CHANGES_PATH: "frontend/knowl3dge-webapp/**/*"
+  before_script:
+    - SONAR_TOKEN=${SONAR_FRONTEND_TOKEN}
+    - cd ./frontend/knowl3dge-webapp
+    - npm install --legacy-peer-deps
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - node_modules
+
+frontend-install-dependencies:
+  stage: install
+  image: node:16.11.1-alpine
+  script:
+    - yarn install
+    - yarn ngcc --properties es2015 --create-ivy-entry-points
+  cache:
+    key:
+      files:
+        - yarn.lock
+    paths:
+      - node_modules
+  only:
+    refs:
+      - merge_requests
+      - master
+    changes:
+      - yarn.lock
+
+backend-build:
   stage: build
-  script: gradle --build-cache assemble
+  extends: .backend
+  needs: []
+  script:
+    - echo "Compiling the backend code..."
+    - gradle --build-cache assemble
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
@@ -33,9 +87,30 @@ build_backend:
       - build
       - .gradle
 
-test_backend:
+frontend-build:
+  stage: build
+  extends: .frontend
+  script:
+    - yarn ng build --prod
+  artifacts:
+    name: "angular-app-pipeline"
+    paths:
+      - $APP_OUTPUT_PATH
+  cache:
+    key:
+      files:
+        - yarn.lock
+    paths:
+      - node_modules
+    policy: pull
+
+backend-test:
   stage: test
-  script: gradle check
+  extends: .backend
+  needs: ["backend-build"]
+  script:
+    - echo "Testing the backend code..."
+    - gradle check
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
@@ -46,3 +121,33 @@ test_backend:
     when: always
     reports:
       junit: backend/build/test-results/test/TEST-*.xml
+
+backend-code-quality:
+  stage: code-quality
+  extends: .backend
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar" # Defines the location of the analysis task cache
+    GIT_DEPTH: "0" # Tells git to fetch all the branches of the project, required by the analysis task
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script: gradle sonarqube
+  allow_failure: true
+
+frontend-code-quality:
+  stage: code-quality
+  extends: .frontend
+  image: 
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: [""]
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"  # Defines the location of the analysis task cache
+    GIT_DEPTH: "0"  # Tells git to fetch all the branches of the project, required by the analysis task
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script: 
+    - sonar-scanner
+  allow_failure: true

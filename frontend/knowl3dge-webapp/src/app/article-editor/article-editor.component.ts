@@ -62,17 +62,17 @@ export class ArticleEditorComponent implements OnInit {
     this.editForm.get('Content')?.setValue(this.article?.content);
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     console.warn(this.editForm.value);
     console.warn(this.editForm.value.Title);
     console.warn(new Date().getTime());
-    const articleSubmitted = {
+    const articleSubmitted: Article = {
       id: 0,
       authorId: this.editForm.value.Author,
       title: this.editForm.value.Title,
       content: this.editForm.value.Content,
       visible: true,
-    } as Article;
+    };
 
     if (this.editing) {
       // Set edit date to current unix timestamp, leave creation date as is.
@@ -80,12 +80,12 @@ export class ArticleEditorComponent implements OnInit {
       articleSubmitted.id = this.articleIdFromRoute;
       articleSubmitted.creationDate = this.article?.creationDate as number;
       articleSubmitted.editDate = new Date().getTime();
-      this.articleService.editArticle(articleSubmitted);
+      await this.articleService.editArticle(articleSubmitted).toPromise();
     } else {
       // Set creation date to current unix timestamp, leave edit date null
       console.warn('Article created', this.editForm.value);
       articleSubmitted.creationDate = new Date().getTime();
-      this.articleService.createArticle(articleSubmitted);
+      await this.articleService.createArticle(articleSubmitted).toPromise();
     }
     this.editForm.reset();
   }

@@ -5,6 +5,7 @@ import { Tag } from './../interfaces/tag';
 import { Article } from './../interfaces/article';
 import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../services/article.service';
+import { MatChip } from '@angular/material/chips';
 
 @Component({
   selector: 'app-article-list',
@@ -15,6 +16,7 @@ export class ArticleListComponent implements OnInit {
   articles!: Article[];
   tags?: Tag[];
   assignedTags?: AssignedTag[];
+  loading: boolean = true;
 
   constructor(
     private articleService: ArticleService,
@@ -28,45 +30,50 @@ export class ArticleListComponent implements OnInit {
     this.getArticles();
   }
 
-  async getArticles(): Promise<void> {
-    const articles = await this.articleService.getArticles().toPromise();
-    this.articles = articles;
+  // Gets articles when the selected tags change
+  selectedTagsChanged(tags: Tag[]) {
+    // Should implement debounce here!
+    this.getArticles(tags);
+  }
 
-    for (let article of articles) {
-      if (article.content) {
-        article.content = this.shorten(article.content);
-      }
+  // Toggles the clicked chip's selection attribute
+  toggleSelection(chip: MatChip) {
+    chip.toggleSelected();
+  }
+
+  // Gets articles and shortens their content
+  async getArticles(tags?: Tag[]) {
+    try {
+      this.loading = true;
+      const articles = await this.articleService.getArticles(tags).toPromise();
+      this.loading = false;
+      this.articles = articles;
+    } catch (error) {
+      console.warn(error);
+      this.articles = [];
+      this.loading = true;
     }
   }
 
+  // Gets all tags
   async getTags(): Promise<void> {
-    const tags = await this.tagService.getTags().toPromise();
-    this.tags = tags;
-
-    console.warn(this.tags);
+    try {
+      const tags = await this.tagService.getTags().toPromise();
+      this.tags = tags;
+    } catch (error) {
+      console.warn(error);
+    }
   }
 
+  // Gets an array of all tags assigned to an article
   async getAssignedTags(): Promise<void> {
-    const assignedTags = await this.assignedTagService
-      .getAssignedTags()
-      .toPromise();
-    this.assignedTags = assignedTags;
-
-    console.warn(this.assignedTags);
-  }
-
-  checkForTags(articleId: number): AssignedTag[]{
-    if(this.assignedTags){
-      console.warn(this.assignedTags.filter(x => x.article_id == articleId));
-      return this.assignedTags.filter(x => x.article_id == articleId);
+    try {
+      const assignedTags = await this.assignedTagService
+        .getAssignedTags()
+        .toPromise();
+      this.assignedTags = assignedTags;
+    } catch (error) {
+      console.warn(error);
     }
-    return [];
-  }
-
-  shorten(input: string): string {
-    if (input.length > 150) {
-      return input.substring(0, 150).trim() + '...';
-    }
-    return input;
   }
 }

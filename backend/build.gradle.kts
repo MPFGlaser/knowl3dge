@@ -3,9 +3,17 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.5.4"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
+	id ("org.sonarqube") version "3.3"
 	kotlin("jvm") version "1.5.21"
 	kotlin("plugin.spring") version "1.5.21"
 	kotlin("plugin.jpa") version "1.5.21"
+}
+
+sonarqube {
+	properties {
+		property("sonar.projectKey", "knowl3dge_knowl3dge_AXyeP_h_EdZwuMC7wfFT")
+		property ("sonar.qualitygate.wait", true)
+	}
 }
 
 group = "nl.mpfglaser"
