@@ -15,9 +15,19 @@ import java.util.*
 class ArticleController(repository: ArticleRepository) {
     val service = ArticleService(repository)
 
-    // Returns all articles
+    // Returns all articles, but if supplied with an id parameter, only the ones specified. (for filtering)
     @GetMapping("")
-    fun findAll(): ResponseEntity<List<Article>> = service.findAll()
+    fun findList(@RequestParam(required = false) id: String?, @RequestParam(required = false) tag: String?): ResponseEntity<List<Article>>{
+        if(id != null){
+            var idList: Iterable<Int> = id.split(',').map {it.toInt()}
+            return service.findAllById(idList)
+        }
+        else if(tag != null){
+            var tagList: Iterable<Int> = tag.split(',').map {it.toInt()}
+            return service.findAllByTag(tagList)
+        }
+        return service.findAll()
+    }
 
     // Remnant of testing the controller. To be removed (or not).
     @GetMapping("/teapot")

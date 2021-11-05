@@ -1,28 +1,11 @@
-<h2>Articles</h2>
 <div>
-  <mat-chip-list aria-label="Tags">
-    <mat-chip *ngFor="let tag of tags">{{ tag.name }}</mat-chip>
-  </mat-chip-list>
+  <div class="filters">
+    <app-article-chip-filter (selectedTagsChangedEvent)='selectedTagsChanged($event)'></app-article-chip-filter>
+  </div>
   <div>
-    <div *ngFor="let article of articles">
-      <mat-card class="article-card">
-        <mat-card-title [routerLink]="['/articles', article.id]"> {{ article.title }} </mat-card-title>
-        <mat-chip-list *ngIf="checkForTags(article.id)">
-          <mat-chip *ngFor="let assignedTag of checkForTags(article.id)">{{ assignedTag }}</mat-chip>
-        </mat-chip-list>
-        <mat-card-content *ngIf="article.content">
-          <p>{{ article.content }}</p>
-        </mat-card-content>
-        <mat-divider inset></mat-divider>
-        <mat-card-actions>
-          <button mat-button [routerLink]="['/articles', article.id]">
-            Learn more
-          </button>
-          <button mat-button [routerLink]="['/articles/edit', article.id]">
-            Edit
-          </button>
-        </mat-card-actions>
-      </mat-card>
+    <mat-spinner *ngIf="loading" class="loading-spinner"></mat-spinner>
+    <div *ngFor="let article of articles" class="article-card">
+      <app-article-card [article]="article" [assignedTags]="assignedTags"></app-article-card>
     </div>
     <button mat-fab color="primary" class="button-add" routerLink="/articles/edit">
       <mat-icon>add</mat-icon>

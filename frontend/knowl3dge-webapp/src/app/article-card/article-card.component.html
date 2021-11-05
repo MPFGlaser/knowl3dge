@@ -1,0 +1,23 @@
+<mat-card class="article-card">
+  <mat-card-title [routerLink]="[' /articles', article.id]"> {{ article.title }} </mat-card-title>
+  <mat-card-content *ngIf="article.content">
+    <p>{{ article.content }}</p>
+  </mat-card-content>
+  <div class="chipList">
+    <mat-chip-list *ngIf="checkForTags(article.id)">
+      <mat-chip *ngFor="let assignedTag of checkForTags(article.id)">{{ assignedTag.tagId?.name }}</mat-chip>
+    </mat-chip-list>
+  </div>
+  <mat-divider inset></mat-divider>
+  <mat-card-actions>
+    <button mat-button [routerLink]="['/articles', article.id]">
+      Learn more
+    </button>
+    <button mat-button [routerLink]="['/articles/edit', article.id]">
+      Edit
+    </button>
+    <button mat-button class="fav-button" disabled>
+      <mat-icon>favorite_border</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

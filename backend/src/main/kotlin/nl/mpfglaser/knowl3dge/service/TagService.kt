@@ -1,6 +1,5 @@
 package nl.mpfglaser.knowl3dge.service
 
-import nl.mpfglaser.knowl3dge.model.Article
 import nl.mpfglaser.knowl3dge.model.Tag
 import nl.mpfglaser.knowl3dge.model.TagsAssigned
 import nl.mpfglaser.knowl3dge.repository.TagAssignedRepository
@@ -29,8 +28,8 @@ class TagService(private val tagRepository: TagRepository, private val tagAssign
     }
 
     // Returns a list of all assigned tags that match the given article_id
-    fun findAssignedTagByArticleId(article_id: Int): ResponseEntity<List<TagsAssigned>>{
-        val result = tagAssignedRepository.findByArticle(article_id)
+    fun findAssignedTagByArticleId(articleId: Int): ResponseEntity<List<TagsAssigned>>{
+        val result = tagAssignedRepository.findByArticleId(articleId)
         if(result.isNotEmpty()){
             return ResponseEntity<List<TagsAssigned>>(result, HttpStatus.OK)
         }
@@ -38,8 +37,8 @@ class TagService(private val tagRepository: TagRepository, private val tagAssign
     }
 
     // Returns a list of all assigned tags that match the given tag_id
-    fun findAssignedTagByTagId(tag_id: Int): ResponseEntity<List<TagsAssigned>>{
-        val result = tagAssignedRepository.findByTag(tag_id)
+    fun findAssignedTagByTagId(tagId: Int): ResponseEntity<List<TagsAssigned>>{
+        val result = tagAssignedRepository.findByTagId(tagId)
         if(result.isNotEmpty()){
             return ResponseEntity<List<TagsAssigned>>(result, HttpStatus.OK)
         }

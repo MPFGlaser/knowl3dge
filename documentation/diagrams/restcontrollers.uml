@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>nl.mpfglaser.knowl3dge.controllers</OriginalElement>
+  <nodes>
+    <node x="73.5009803921568" y="218.0">nl.mpfglaser.knowl3dge.repository.TagAssignedRepository</node>
+    <node x="616.7549019607843" y="218.0">nl.mpfglaser.knowl3dge.service.ArticleService</node>
+    <node x="302.5009803921568" y="218.0">nl.mpfglaser.knowl3dge.repository.TagRepository</node>
+    <node x="176.0009803921568" y="0.0">nl.mpfglaser.knowl3dge.model.Tag</node>
+    <node x="363.4166666666667" y="406.0">nl.mpfglaser.knowl3dge.controllers.TagController</node>
+    <node x="106.0009803921568" y="123.0">nl.mpfglaser.knowl3dge.model.TagsAssigned</node>
+    <node x="340.0009803921568" y="0.0">nl.mpfglaser.knowl3dge.model.Article</node>
+    <node x="396.3759803921568" y="323.0">nl.mpfglaser.knowl3dge.service.TagService</node>
+    <node x="568.3303921568628" y="323.0">nl.mpfglaser.knowl3dge.controllers.ArticleController</node>
+    <node x="544.9176470588236" y="123.0">nl.mpfglaser.knowl3dge.repository.ArticleRepository</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="nl.mpfglaser.knowl3dge.model.TagsAssigned" target="nl.mpfglaser.knowl3dge.model.Article" relationship="DEPENDENCY">
+      <point x="36.0" y="-15.5" />
+      <point x="214.0009803921568" y="82.0" />
+      <point x="579.3343137254901" y="82.0" />
+      <point x="579.3343137254901" y="72.0" />
+      <point x="410.5009803921568" y="72.0" />
+      <point x="23.5" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.model.TagsAssigned" target="nl.mpfglaser.knowl3dge.model.Tag" relationship="DEPENDENCY">
+      <point x="36.0" y="-15.5" />
+      <point x="214.0009803921568" y="62.0" />
+      <point x="295.2509803921568" y="62.0" />
+      <point x="295.2509803921568" y="52.0" />
+      <point x="233.7509803921568" y="52.0" />
+      <point x="19.25" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.controllers.TagController" target="nl.mpfglaser.knowl3dge.model.Tag" relationship="DEPENDENCY">
+      <point x="-47.66666666666666" y="-15.5" />
+      <point x="387.25" y="385.0" />
+      <point x="135.16764705882355" y="385.0" />
+      <point x="135.16764705882355" y="375.0" />
+      <point x="44.247058823529414" y="375.0" />
+      <point x="44.247058823529414" y="92.0" />
+      <point x="295.2509803921568" y="92.0" />
+      <point x="295.2509803921568" y="52.0" />
+      <point x="233.7509803921568" y="52.0" />
+      <point x="19.25" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.service.ArticleService" target="nl.mpfglaser.knowl3dge.repository.ArticleRepository" relationship="TO_ONE">
+      <point x="-35.0" y="-15.5" />
+      <point x="651.7549019607843" y="196.0" />
+      <point x="668.6676470588236" y="196.0" />
+      <point x="41.25" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.repository.ArticleRepository" target="nl.mpfglaser.knowl3dge.model.Article" relationship="DEPENDENCY">
+      <point x="0.0" y="-15.5" />
+      <point x="627.4176470588236" y="102.0" />
+      <point x="579.3343137254901" y="102.0" />
+      <point x="579.3343137254901" y="72.0" />
+      <point x="410.5009803921568" y="72.0" />
+      <point x="23.5" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.service.ArticleService" target="nl.mpfglaser.knowl3dge.repository.ArticleRepository" relationship="DEPENDENCY">
+      <point x="35.0" y="-15.5" />
+      <point x="721.7549019607843" y="196.0" />
+      <point x="720.4176470588236" y="196.0" />
+      <point x="720.4176470588236" y="186.0" />
+      <point x="595.5426470588236" y="186.0" />
+      <point x="595.5426470588236" y="176.0" />
+      <point x="586.1676470588236" y="176.0" />
+      <point x="-41.25" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.service.TagService" target="nl.mpfglaser.knowl3dge.repository.TagAssignedRepository" relationship="TO_ONE">
+      <point x="-30.75" y="-15.5" />
+      <point x="427.1259803921568" y="301.0" />
+      <point x="263.16764705882355" y="301.0" />
+      <point x="263.16764705882355" y="281.0" />
+      <point x="230.2509803921568" y="281.0" />
+      <point x="52.25" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.repository.TagAssignedRepository" target="nl.mpfglaser.knowl3dge.model.TagsAssigned" relationship="DEPENDENCY">
+      <point x="0.0" y="-15.5" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.model.TagsAssigned" target="nl.mpfglaser.knowl3dge.model.Tag" relationship="TO_ONE">
+      <point x="-36.0" y="-15.5" />
+      <point x="142.0009803921568" y="102.0" />
+      <point x="0.0" y="102.0" />
+      <point x="0.0" y="72.0" />
+      <point x="195.2509803921568" y="72.0" />
+      <point x="-19.25" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.service.TagService" target="nl.mpfglaser.knowl3dge.model.Tag" relationship="DEPENDENCY">
+      <point x="30.75" y="-15.5" />
+      <point x="488.6259803921568" y="301.0" />
+      <point x="505.0" y="301.0" />
+      <point x="505.0" y="92.0" />
+      <point x="295.2509803921568" y="92.0" />
+      <point x="295.2509803921568" y="52.0" />
+      <point x="233.7509803921568" y="52.0" />
+      <point x="19.25" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.repository.TagRepository" target="nl.mpfglaser.knowl3dge.model.Tag" relationship="DEPENDENCY">
+      <point x="0.0" y="-15.5" />
+      <point x="376.5009803921568" y="186.0" />
+      <point x="422.54362745098035" y="186.0" />
+      <point x="422.54362745098035" y="92.0" />
+      <point x="295.2509803921568" y="92.0" />
+      <point x="295.2509803921568" y="52.0" />
+      <point x="233.7509803921568" y="52.0" />
+      <point x="19.25" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.controllers.ArticleController" target="nl.mpfglaser.knowl3dge.repository.ArticleRepository" relationship="DEPENDENCY">
+      <point x="-53.33333333333334" y="-15.5" />
+      <point x="594.9970588235294" y="301.0" />
+      <point x="568.0843137254901" y="301.0" />
+      <point x="568.0843137254901" y="291.0" />
+      <point x="595.5426470588236" y="291.0" />
+      <point x="595.5426470588236" y="176.0" />
+      <point x="586.1676470588236" y="176.0" />
+      <point x="-41.25" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.controllers.TagController" target="nl.mpfglaser.knowl3dge.repository.TagAssignedRepository" relationship="DEPENDENCY">
+      <point x="-47.66666666666666" y="-15.5" />
+      <point x="387.25" y="385.0" />
+      <point x="135.16764705882355" y="385.0" />
+      <point x="135.16764705882355" y="375.0" />
+      <point x="171.79362745098035" y="375.0" />
+      <point x="171.79362745098035" y="281.0" />
+      <point x="125.7509803921568" y="281.0" />
+      <point x="-52.25" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.controllers.ArticleController" target="nl.mpfglaser.knowl3dge.service.ArticleService" relationship="CREATE">
+      <point x="0.0" y="-15.5" />
+      <point x="648.3303921568628" y="301.0" />
+      <point x="651.7549019607843" y="301.0" />
+      <point x="-35.0" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.service.TagService" target="nl.mpfglaser.knowl3dge.repository.TagAssignedRepository" relationship="DEPENDENCY">
+      <point x="30.75" y="-15.5" />
+      <point x="488.6259803921568" y="291.0" />
+      <point x="171.79362745098035" y="291.0" />
+      <point x="171.79362745098035" y="281.0" />
+      <point x="125.7509803921568" y="281.0" />
+      <point x="-52.25" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.controllers.TagController" target="nl.mpfglaser.knowl3dge.service.TagService" relationship="CREATE">
+      <point x="0.0" y="-15.5" />
+      <point x="434.9166666666667" y="385.0" />
+      <point x="427.1259803921568" y="385.0" />
+      <point x="-30.75" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.controllers.TagController" target="nl.mpfglaser.knowl3dge.service.TagService" relationship="TO_ONE">
+      <point x="47.66666666666666" y="-15.5" />
+      <point x="482.5833333333333" y="385.0" />
+      <point x="488.6259803921568" y="385.0" />
+      <point x="30.75" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.controllers.TagController" target="nl.mpfglaser.knowl3dge.model.TagsAssigned" relationship="DEPENDENCY">
+      <point x="-47.66666666666666" y="-15.5" />
+      <point x="387.25" y="385.0" />
+      <point x="135.16764705882355" y="385.0" />
+      <point x="135.16764705882355" y="375.0" />
+      <point x="63.00098039215675" y="375.0" />
+      <point x="63.00098039215675" y="196.0" />
+      <point x="178.0009803921568" y="196.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.controllers.ArticleController" target="nl.mpfglaser.knowl3dge.service.ArticleService" relationship="TO_ONE">
+      <point x="53.333333333333314" y="-15.5" />
+      <point x="701.6637254901962" y="301.0" />
+      <point x="721.7549019607843" y="301.0" />
+      <point x="35.0" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.service.TagService" target="nl.mpfglaser.knowl3dge.model.TagsAssigned" relationship="DEPENDENCY">
+      <point x="30.75" y="-15.5" />
+      <point x="488.6259803921568" y="196.0" />
+      <point x="178.0009803921568" y="196.0" />
+      <point x="0.0" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.model.TagsAssigned" target="nl.mpfglaser.knowl3dge.model.Article" relationship="TO_ONE">
+      <point x="-36.0" y="-15.5" />
+      <point x="142.0009803921568" y="102.0" />
+      <point x="0.0" y="102.0" />
+      <point x="0.0" y="72.0" />
+      <point x="363.5009803921568" y="72.0" />
+      <point x="-23.5" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.controllers.TagController" target="nl.mpfglaser.knowl3dge.repository.TagRepository" relationship="DEPENDENCY">
+      <point x="-47.66666666666666" y="-15.5" />
+      <point x="387.25" y="385.0" />
+      <point x="135.16764705882355" y="385.0" />
+      <point x="135.16764705882355" y="375.0" />
+      <point x="381.5009803921568" y="375.0" />
+      <point x="381.5009803921568" y="271.0" />
+      <point x="413.5009803921568" y="271.0" />
+      <point x="37.0" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.controllers.ArticleController" target="nl.mpfglaser.knowl3dge.model.Article" relationship="DEPENDENCY">
+      <point x="-53.33333333333334" y="-15.5" />
+      <point x="594.9970588235294" y="301.0" />
+      <point x="568.0843137254901" y="301.0" />
+      <point x="568.0843137254901" y="291.0" />
+      <point x="534.4176470588236" y="291.0" />
+      <point x="534.4176470588236" y="102.0" />
+      <point x="579.3343137254901" y="102.0" />
+      <point x="579.3343137254901" y="72.0" />
+      <point x="410.5009803921568" y="72.0" />
+      <point x="23.5" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.service.TagService" target="nl.mpfglaser.knowl3dge.repository.TagRepository" relationship="TO_ONE">
+      <point x="-30.75" y="-15.5" />
+      <point x="427.1259803921568" y="301.0" />
+      <point x="263.16764705882355" y="301.0" />
+      <point x="263.16764705882355" y="281.0" />
+      <point x="339.5009803921568" y="281.0" />
+      <point x="-37.0" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.service.TagService" target="nl.mpfglaser.knowl3dge.repository.TagRepository" relationship="DEPENDENCY">
+      <point x="30.75" y="-15.5" />
+      <point x="488.6259803921568" y="281.0" />
+      <point x="381.5009803921568" y="281.0" />
+      <point x="381.5009803921568" y="271.0" />
+      <point x="413.5009803921568" y="271.0" />
+      <point x="37.0" y="15.5" />
+    </edge>
+    <edge source="nl.mpfglaser.knowl3dge.service.ArticleService" target="nl.mpfglaser.knowl3dge.model.Article" relationship="DEPENDENCY">
+      <point x="35.0" y="-15.5" />
+      <point x="721.7549019607843" y="196.0" />
+      <point x="720.4176470588236" y="196.0" />
+      <point x="720.4176470588236" y="102.0" />
+      <point x="579.3343137254901" y="102.0" />
+      <point x="579.3343137254901" y="72.0" />
+      <point x="410.5009803921568" y="72.0" />
+      <point x="23.5" y="15.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="1.0" showDependencies="true" x="378.5" y="218.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

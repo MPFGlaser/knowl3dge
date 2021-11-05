@@ -39,28 +39,4 @@ Details to follow soon.
 
 ## REST API Documentation
 
-| URL | Resource | Operation | Description |
-|-----|----------|-----------|-------------|
-| /api/users | Users | GET | Gets a list of all users |
-| /api/users/{id} | Users | GET | Gets user with id {id} |
-| /api/users/{id} | Users | DELETE | Deletes user with id {id} |
-| /api/users/{id} | Users | PUT | Updates user with id {id} |
-| /api/users | Users | POST | Creates a new user |
-| /api/articles | Articles | GET | Gets a list of all Articles |
-| /api/articles/{id} | Articles | GET | Gets article with id {id} |
-| /api/articles?printerType=printerType | Articles | GET | Gets articles with a specific printerType |
-| /api/articles?filamentType=filamentType | Articles | GET | Get articles with a specific filamentType |
-| /api/articles?issueType=issueType | Articles | GET | Gets articles with a specific issueType |
-| /api/articles/{id} | Articles | DELETE | Deletes article with id {id} |
-| /api/articles/{id} | Articles | PUT | Updates article with id {id} |
-| /api/articles | Articles | POST | Creates a new article |
-| /api/tags/all | Tags | GET | Gets all tags |
-| /api/tags/edit | Tags | PUT | Updates a tag |
-| /api/tags/new | Tags | POST | Creates a new tag |
-| /api/tags/delete/{id} | Tags | DELETE | Deletes a tag |
-| /api/tags/new_assignment | TagsAssigned | POST | Creates a new tag assignment | 
-| /api/tags/all_assigned | TagsAssigned | GET | Gets all assigned tags |
-| /api/tags/all_assigned/aid/{id} | TagsAssigned | GET | Gets all assigned tags for article with {id} |
-| /api/tags/all_assigned/tid/{id} | TagsAssigned | GET | Gets all assigned articles for tag with {id} |
-| /api/tags/edit_assignment | TagsAssigned | PUT | Updates a tag assignment |
-| /api/tags/delete_assignment | TagsAssigned | DELETE | Deletes a tag assignment |
+REST API Documentation has been moved to [knowl3dge-sad.md](documentation/knowl3dge-sad.md)
