@@ -1,0 +1,54 @@
+<form class="login-form">
+  <mat-card class="login-card">
+    <div class="login-card-header">
+      <h1 class="login-card-title" *ngIf="!register">Login</h1>
+      <h1 class="login-card-title" *ngIf="register">Register</h1>
+      <mat-slide-toggle class="register-slider" checked="{{register}}" (toggleChange)="toggleRegister()">New here?</mat-slide-toggle>
+    </div>
+
+    <div *ngIf="register">
+      <mat-form-field class="login-field" appearance="fill">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="John">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="login-field" appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput placeholder="john.doe">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="login-field" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="john.doe">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="login-field" appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput type="password">
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="register">
+      <mat-form-field class="login-field" appearance="fill">
+        <mat-label>Confirm password</mat-label>
+        <input matInput type="password">
+      </mat-form-field>
+    </div>
+
+    <mat-card-actions align="end">
+      <div *ngIf="!register">
+        <button mat-button disabled>Forgot password?</button>
+        <button mat-raised-button color="primary">Login</button>
+      </div>
+      <div *ngIf="register">
+        <button mat-raised-button color="primary">Register</button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</form>
