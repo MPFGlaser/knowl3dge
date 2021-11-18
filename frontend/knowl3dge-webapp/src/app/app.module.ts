@@ -25,7 +25,9 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ArticleCardComponent } from './article-card/article-card.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   imports: [
@@ -47,6 +49,7 @@ import { HomeComponent } from './home/home.component';
     MatSidenavModule,
     MatListModule,
     MatProgressSpinnerModule,
+    MatSlideToggleModule,
   ],
   declarations: [
     AppComponent,
@@ -58,6 +61,7 @@ import { HomeComponent } from './home/home.component';
     NavBarComponent,
     ArticleCardComponent,
     HomeComponent,
+    LoginComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
