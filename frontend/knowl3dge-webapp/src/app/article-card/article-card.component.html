@@ -16,8 +16,11 @@
     <button mat-button [routerLink]="['/articles/edit', article.id]">
       Edit
     </button>
-    <button mat-button class="fav-button" disabled>
-      <mat-icon>favorite_border</mat-icon>
+    <button mat-icon-button class="icon-button" disabled>
+      <mat-icon class="button-icon">favorite_border</mat-icon>
+    </button>
+    <button mat-icon-button class="icon-button" disabled>
+      <mat-icon class="button-icon">add</mat-icon>
     </button>
   </mat-card-actions>
 </mat-card>
