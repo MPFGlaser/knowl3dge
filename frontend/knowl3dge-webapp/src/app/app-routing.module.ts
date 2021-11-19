@@ -1,3 +1,4 @@
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { NgModule } from '@angular/core';
@@ -17,6 +18,7 @@ const routes: Routes = [
     component: ArticleEditorComponent,
   },
   { path: 'articles/:articleId', component: ArticleDetailsComponent },
+  { path: 'user/:userId', component: UserProfileComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: LoginComponent },
   { path: '**', component: PageNotFoundComponent }, // Wildcard route for a 404 page

@@ -1,0 +1,54 @@
+<mat-card class="profile-card">
+  <mat-card-header>
+    <mat-card-title>
+      <h1>My Profile</h1>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div>
+      <mat-form-field class="profile-field">
+        <mat-label>Name</mat-label>
+        <input matInput value="Name" disabled="{{!this.editing}}">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="profile-field">
+        <mat-label>Username</mat-label>
+        <input matInput value="john.doe" disabled="{{!this.editing}}">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="profile-field">
+        <mat-label>Email</mat-label>
+        <input matInput value="john.doe@example.com" disabled="{{!this.editing}}">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="profile-field" *ngIf="this.editing">
+        <mat-label>Current password</mat-label>
+        <input matInput value="" type="password" disabled="{{!this.editing}}">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="profile-field" *ngIf="this.editing">
+        <mat-label>New password</mat-label>
+        <input matInput value="" type="password" disabled="{{!this.editing}}">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field class="profile-field" *ngIf="this.editing">
+        <mat-label>Repeat new password</mat-label>
+        <input matInput value="" type="password" disabled="{{!this.editing}}">
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="editProfile()"
+      class="profile-button">{{this.editingButtonText}}</button>
+  </mat-card-actions>
+</mat-card>
