@@ -10,9 +10,12 @@ import { AssignedTag } from '../interfaces/assignedTag';
 export class ArticleCardComponent implements OnInit {
   @Input() article!: Article;
   @Input() assignedTags?: AssignedTag[] = [];
+  @Input() preview?: boolean;
 
   ngOnInit() {
+    if(this.preview){
     this.article.content = this.shorten(this.article.content);
+    }
   }
   // Checks if an article has tags assigned to it
   checkForTags(articleId: number): AssignedTag[] {

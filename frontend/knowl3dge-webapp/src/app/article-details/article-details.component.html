@@ -1,12 +1,1 @@
-<mat-card class="article-card" *ngIf="article">
-  <mat-card-title> {{ article.title }} </mat-card-title>
-  <mat-card-content *ngIf="article.content">
-    <p>{{ article.content }}</p>
-  </mat-card-content>
-  <mat-divider inset></mat-divider>
-  <mat-card-actions>
-    <button mat-button [routerLink]="['/articles/edit', article.id]">
-      Edit
-    </button>
-  </mat-card-actions>
-</mat-card>
+<app-article-card class="article-card" *ngIf="article" [article]="article" [preview]="false"></app-article-card>
