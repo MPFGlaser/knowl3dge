@@ -27,6 +27,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ArticleCardComponent } from './article-card/article-card.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { HomeComponent } from './home/home.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 import { LoginComponent } from './login/login.component';
 
 @NgModule({
@@ -61,6 +62,7 @@ import { LoginComponent } from './login/login.component';
     NavBarComponent,
     ArticleCardComponent,
     HomeComponent,
+    UserProfileComponent,
     LoginComponent,
   ],
   providers: [],
