@@ -9,6 +9,12 @@ import { Tag } from '../interfaces/tag';
 export class ArticleService {
   apiBaseUrl = 'http://localhost:8080/api/articles';
 
+  token = localStorage.getItem('token');
+  headers = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${this.token}`
+  };
+
   constructor(private http: HttpClient) {}
 
   getArticles(tags?: Tag[]) {
@@ -17,26 +23,28 @@ export class ArticleService {
       query = this.generateQueryString(tags);
     }
     console.warn(`${this.apiBaseUrl}${query}`);
-    return this.http.get<Article[]>(`${this.apiBaseUrl}${query}`);
+    return this.http.get<Article[]>(`${this.apiBaseUrl}${query}`, {
+      headers: this.headers,
+    });
   }
 
   getArticle(id: number) {
-    return this.http.get<Article>(`${this.apiBaseUrl}/${id}`);
+    return this.http.get<Article>(`${this.apiBaseUrl}/${id}`, {
+      headers: this.headers,
+    });
   }
 
   createArticle(article: Article) {
-    const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(article);
     return this.http.post<Article>(`${this.apiBaseUrl}/new`, body, {
-      headers: headers,
+      headers: this.headers,
     });
   }
 
   editArticle(article: Article) {
-    const headers = { 'content-type': 'application/json' };
     const body = JSON.stringify(article);
     return this.http.put<Article>(`${this.apiBaseUrl}/edit`, body, {
-      headers: headers,
+      headers: this.headers,
     });
   }
 
