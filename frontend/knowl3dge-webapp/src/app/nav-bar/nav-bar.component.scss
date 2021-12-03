@@ -20,7 +20,7 @@
   cursor: pointer;
 }
 
-.login-button-container {
+.header-content {
   float: right;
   position: fixed;
   right: 10pt;
@@ -28,5 +28,15 @@
 }
 
 .login-button {
-  margin: 5pt;
+  margin: 0 5pt 0 5pt;
+}
+
+.login-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.username {
+  margin: 0 10pt 0 10pt;
 }

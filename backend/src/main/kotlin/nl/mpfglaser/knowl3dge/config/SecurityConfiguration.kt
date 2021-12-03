@@ -14,6 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
@@ -28,13 +31,31 @@ class SecurityConfiguration(userService: UserService) : WebSecurityConfigurerAda
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
-        http.cors().and().csrf().disable().authorizeRequests()
+        http.cors()
+            .configurationSource(corsConfigurationSource())
+            .and().csrf().disable().authorizeRequests()
             .antMatchers(HttpMethod.POST, AuthenticationConfigConstants.SIGN_UP_URL).permitAll()
+            .antMatchers(HttpMethod.GET, AuthenticationConfigConstants.SIGN_UP_URL+"/getuserid/**").permitAll()
+            .antMatchers(HttpMethod.POST, "/login").permitAll()
             .anyRequest().authenticated()
             .and()
             .addFilter(JWTAuthenticationFilter(authenticationManager()))
             .addFilter(JWTAuthorizationFilter(authenticationManager())) // this disables session creation on Spring Security
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
+    }
+
+    fun corsConfigurationSource(): CorsConfigurationSource? {
+        val configuration = CorsConfiguration()
+        val allowOrigins: List<String> = listOf("http://localhost:4200")
+        configuration.allowedOrigins = allowOrigins
+        configuration.allowedMethods = listOf("*")
+        configuration.allowedHeaders = listOf("*")
+        //in case authentication is enabled this flag MUST be set, otherwise CORS requests will fail
+        configuration.allowCredentials = true
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
     }
 
     @Throws(Exception::class)

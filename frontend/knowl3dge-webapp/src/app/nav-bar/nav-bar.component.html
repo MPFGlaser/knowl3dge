@@ -14,13 +14,23 @@
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <span routerLink="" class="navbar-name">KNOWL3DGE</span>
-      <div class="login-button-container">
-        <button mat-raised-button color="basic" class="login-button" routerLink="/register">
-          Register
-        </button>
-        <button mat-flat-button color="accent" routerLink="/login">
-          Login
-        </button>
+      <div class="header-content">
+        <div class="login-button-container" *ngIf="!isLoggedIn">
+          <button mat-raised-button color="basic" class="login-button" routerLink="/register">
+            Register
+          </button>
+          <button mat-flat-button color="accent" routerLink="/login">
+            Login
+          </button>
+        </div>
+        <div class="login-button-container" *ngIf="isLoggedIn">
+          <div class="username">
+            <span>Welcome, {{currentUsername}}</span>
+          </div>
+          <button mat-flat-button color="accent" (click)="logout()">
+            Log Out
+          </button>
+        </div>
       </div>
     </mat-toolbar>
     <router-outlet></router-outlet>

@@ -1,12 +1,11 @@
-import { Tag } from '../interfaces/tag';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TagService {
-  apiBaseUrl = 'http://localhost:8080/api/tags';
+export class UserService {
+  apiBaseUrl = 'http://localhost:8080/api/user';
 
   token = localStorage.getItem('token');
   headers = {
@@ -16,7 +15,7 @@ export class TagService {
 
   constructor(private http: HttpClient) { }
 
-  getTags(){
-    return this.http.get<Tag[]>(`${this.apiBaseUrl}/all`, {headers: this.headers});
+  getUserIdByUsername(username: string) {
+    return this.http.get<number>(`${this.apiBaseUrl}/getuserid/${username}`);
   }
 }

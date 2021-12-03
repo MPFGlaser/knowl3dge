@@ -53,16 +53,10 @@ class JWTAuthenticationFilter(authenticationManager: AuthenticationManager) : Us
                 .sign(Algorithm.HMAC512(AuthenticationConfigConstants.SECRET.toByteArray()))
 
             // JWT as body
-//            response.contentType = "application/json"
-//            response.characterEncoding = "UTF-8"
-//            response.writer.write(
-//                "{\"" + AuthenticationConfigConstants.HEADER_STRING + "\":\"" + AuthenticationConfigConstants.TOKEN_PREFIX + token + "\"}"
-//            )
-
-            // JWT as header
-            response.addHeader(
-                AuthenticationConfigConstants.HEADER_STRING,
-                AuthenticationConfigConstants.TOKEN_PREFIX + token
+            response.contentType = "application/json"
+            response.characterEncoding = "UTF-8"
+            response.writer.write(
+                "{\"" + AuthenticationConfigConstants.HEADER_STRING + "\":\"" + AuthenticationConfigConstants.TOKEN_PREFIX + token + "\"}"
             )
         } catch (e: Exception) {
             throw Exception(e)
