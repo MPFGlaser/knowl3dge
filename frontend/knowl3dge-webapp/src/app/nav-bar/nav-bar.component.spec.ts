@@ -1,3 +1,4 @@
+import { UserService } from './../services/user.service';
 import { AppRoutingModule } from './../app-routing.module';
 import {
   BreakpointObserver,
@@ -22,12 +23,12 @@ describe('NavBarComponent', () => {
   let component: NavBarComponent;
   let fixture: ComponentFixture<NavBarComponent>;
 
-  let authServiceStub: Partial<AuthService>;
+  let userServiceStub: Partial<UserService>;
   let matSnackBarStub: Partial<MatSnackBar>;
 
   beforeEach(
     waitForAsync(() => {
-      authServiceStub = {
+      userServiceStub = {
         isLoggedIn: new BehaviorSubject<boolean>(true),
         currentUsername: new BehaviorSubject<string>('test'),
         currentUserId: new BehaviorSubject<number>(1),
@@ -49,7 +50,7 @@ describe('NavBarComponent', () => {
         ],
         providers: [
           { provide: BreakpointObserver },
-          { provide: AuthService, useValue: authServiceStub },
+          { provide: UserService, useValue: userServiceStub },
           { provide: MatSnackBar, useValue: matSnackBarStub },
         ],
       }).compileComponents();

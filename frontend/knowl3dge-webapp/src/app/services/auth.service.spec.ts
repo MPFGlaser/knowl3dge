@@ -75,21 +75,6 @@ describe('AuthService', () => {
     jwtHelperSpy.getTokenExpirationDate.and.returnValue(tomorrow);
 
 
-    authService.login(credentials);
-
-    expect(authService.isCurrentlyLoggedIn()).toBe(true);
-
-
-    // authService.currentUserId.subscribe(id => {
-    //   expect(id).toBe(userId);
-    // });
-
-    // authService.currentUsername.subscribe(username => {
-    //   expect(username).toMatch(credentials.username);
-    // });
-
-    // authService.isLoggedIn.subscribe(isLoggedIn => {
-    //   expect(isLoggedIn).toBe(true);
-    // });
+    // authService.login(credentials)
   });
 });

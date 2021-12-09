@@ -1,3 +1,4 @@
+import { UserService } from './../services/user.service';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,6 +10,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 import { LoginComponent } from './login.component';
+import { BehaviorSubject } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -16,6 +18,7 @@ describe('LoginComponent', () => {
 
   let routerStub: Partial<Router>;
   let authServiceStub: Partial<AuthService>;
+  let userServiceSpy: jasmine.SpyObj<UserService>;
   let snackBarStub: Partial<MatSnackBar>;
 
   beforeEach(() => {
@@ -23,12 +26,17 @@ describe('LoginComponent', () => {
       url: '/login',
     };
 
+    userServiceSpy = jasmine.createSpyObj('UserService', ['isLoggedIn']);
+
+    userServiceSpy.isLoggedIn = new BehaviorSubject<boolean>(false);
+
     TestBed.configureTestingModule({
       declarations: [LoginComponent],
       providers: [
         { provide: Router, useValue: routerStub },
         { provide: FormBuilder },
         { provide: AuthService, useValue: authServiceStub },
+        { provide: UserService, useValue: userServiceSpy },
         { provide: MatSnackBar, useValue: snackBarStub },
       ],
       imports: [
@@ -38,7 +46,7 @@ describe('LoginComponent', () => {
         MatSlideToggleModule,
         FormsModule,
         ReactiveFormsModule,
-      ]
+      ],
     }).compileComponents();
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
