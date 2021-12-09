@@ -19,62 +19,74 @@ export class AuthService {
     -1
   );
 
-  jwtHelper = new JwtHelperService();
-
   apiBaseUrl = 'http://localhost:8080';
 
-  constructor(private http: HttpClient, private userService: UserService) {
+  constructor(
+    private http: HttpClient,
+    private userService: UserService,
+    private jwtHelper: JwtHelperService
+  ) {
     this.isCurrentlyLoggedIn();
   }
 
   login(credentials: UserCredentials) {
-      this.http
-        .post<any>(`${this.apiBaseUrl}/login`, credentials, {
-          observe: 'response',
-        })
-        .subscribe((resp) => {
-          console.log('got response' + resp);
-          console.log(resp);
-          this.setSession(resp);
-        });
+    this.http
+      .post<any>(`${this.apiBaseUrl}/login`, credentials, {
+        observe: 'response',
+      })
+      .subscribe((resp) => {
+        const token = this.getTokenFromResponse(resp);
+        this.populateLocalStorage(token);
+      });
   }
 
-  private setSession(authResult: HttpResponse<any>) {
+  private getTokenFromResponse(authResult: HttpResponse<any>): string {
     if (authResult.status === 200 && authResult.body.Authorization) {
-      let token = authResult.body.Authorization.split(' ')[1];
+      return authResult.body.Authorization.split(' ')[1];
+    }
+    return '';
+  }
+
+  // Sets the token, username and userId in the localstorage.
+  private async populateLocalStorage(token: string) {
+    if (this.jwtHelper.decodeToken(token)) {
       localStorage.setItem('token', token);
 
-      let username = this.jwtHelper.decodeToken(token!!).sub;
-      this.isLoggedIn.next(true);
+      let username = this.jwtHelper.decodeToken(token).sub;
       this.currentUsername.next(username);
-      this.userService
-        .getUserIdByUsername(username)
-        .toPromise()
-        .then((id) => this.currentUserId.next(id));
 
-      console.log('logged in');
-      return this.isCurrentlyLoggedIn();
+      let userId: number = await this.userService.getUserIdByUsername(username).toPromise();
+      this.currentUserId.next(userId);
+      console.warn('user id is: ' + userId);
+
+      this.isCurrentlyLoggedIn();
+    } else {
+      throw new Error('Token is not valid');
     }
-    console.log('not logged in');
-    return false;
   }
 
-  isCurrentlyLoggedIn(): boolean {
-    let token = localStorage.getItem('token');
+  // Checks and returns if the token is valid.
+  private checkTokenValidity(token: string): boolean {
     try {
-      if (!this.jwtHelper.isTokenExpired(token!!)) {
-        return true;
-      } else {
-        this.logout();
-        return false;
-      }
+      return !this.jwtHelper.isTokenExpired(token);
     } catch (error) {
-      this.logout();
       console.warn(error);
       return false;
     }
   }
 
+  // Checks if the user is logged in by using checkTokenValidity(). If not, logout() is called.
+  isCurrentlyLoggedIn(): boolean {
+    let token = localStorage.getItem('token');
+    if (this.checkTokenValidity(token!!)) {
+      this.isLoggedIn.next(true);
+      return true;
+    }
+    this.logout();
+    return false;
+  }
+
+  // Empties the localstorage logging out the user.
   logout() {
     localStorage.removeItem('token');
     this.isLoggedIn.next(false);
@@ -82,6 +94,7 @@ export class AuthService {
     this.currentUserId.next(-1);
   }
 
+  // Sends a request with the provided credentials to register the user with the server.
   register(credentials: UserCredentials): boolean {
     try {
       this.http

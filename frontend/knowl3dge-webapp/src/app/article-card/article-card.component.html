@@ -1,5 +1,5 @@
 <mat-card class="article-card">
-  <mat-card-title [routerLink]="[' /articles', article.id]"> {{ article.title }} </mat-card-title>
+  <mat-card-title [routerLink]="['/articles', article.id]"> {{ article.title }} </mat-card-title>
   <mat-card-content *ngIf="article.content">
     <p>{{ article.content }}</p>
   </mat-card-content>

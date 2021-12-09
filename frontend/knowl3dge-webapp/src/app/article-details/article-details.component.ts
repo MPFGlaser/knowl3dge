@@ -10,6 +10,8 @@ import { Article } from '../interfaces/article';
 })
 export class ArticleDetailsComponent implements OnInit {
   article: Article | undefined;
+  routeParams = this.route.snapshot.paramMap;
+  articleIdFromRoute = Number(this.routeParams.get('articleId'));
 
   constructor(
     private route: ActivatedRoute,
@@ -17,10 +19,7 @@ export class ArticleDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const routeParams = this.route.snapshot.paramMap;
-    const articleIdFromRoute = Number(routeParams.get('articleId'));
-
-    this.getArticle(articleIdFromRoute);
+    this.getArticle(this.articleIdFromRoute);
   }
 
   async getArticle(id: number) {
