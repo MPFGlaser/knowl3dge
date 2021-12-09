@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -12,13 +13,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class LoginComponent implements OnInit {
   register: boolean = false;
+  isLoggedIn: boolean = false;
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
     private authService: AuthService,
+    private userService: UserService,
     private snackBar: MatSnackBar
-  ) {}
+  ) {
+    this.userService.isLoggedIn.subscribe((value) => {
+      this.isLoggedIn = value;
+    });
+  }
 
   userDetailsForm = this.formBuilder.group({
     name: ['', Validators.required],
@@ -51,13 +58,16 @@ export class LoginComponent implements OnInit {
         this.snackBar.open('Account created. Welcome!', '', { duration: 2500 });
       }
     } else {
-      this.authService.login(credentials)
-      console.warn(this.authService.isCurrentlyLoggedIn());
-      if (this.authService.isCurrentlyLoggedIn()) {
+      if (await this.authService.login(credentials)) {
+        this.router.navigate(['/']);
         this.snackBar.open('Welcome!', '', { duration: 2500 });
       } else {
         this.snackBar.open('Something went wrong', '', { duration: 2500 });
       }
     }
+  }
+
+  OnDestroy() {
+    this.userService.isLoggedIn.unsubscribe();
   }
 }
