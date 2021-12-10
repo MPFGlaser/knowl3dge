@@ -17,6 +17,7 @@ import { ArticleListComponent } from './article-list.component';
 import {
   MatProgressSpinnerModule,
 } from '@angular/material/progress-spinner';
+import { UserService } from '../services/user.service';
 
 describe('ArticleListComponent', () => {
   let component: ArticleListComponent;
@@ -25,6 +26,7 @@ describe('ArticleListComponent', () => {
   let articleServiceSpy: jasmine.SpyObj<ArticleService>;
   let tagServiceSpy: jasmine.SpyObj<TagService>;
   let assignedTagServiceSpy: jasmine.SpyObj<AssignedTagService>;
+  let userServiceSpy: jasmine.SpyObj<UserService>;
 
   let mockTags: Tag[];
   let mockAssignedTags: AssignedTag[];
@@ -34,6 +36,7 @@ describe('ArticleListComponent', () => {
     articleServiceSpy = jasmine.createSpyObj('ArticleService', ['getArticles']);
     tagServiceSpy = jasmine.createSpyObj('TagService', ['getTags']);
     assignedTagServiceSpy = jasmine.createSpyObj('AssignedTagService', ['getAssignedTags']);
+    userServiceSpy = jasmine.createSpyObj('UserService', ['getAllFavourites']);
 
     tagServiceSpy.getTags.and.returnValue(asyncData(mockTags));
     assignedTagServiceSpy.getAssignedTags.and.returnValue(asyncData(mockAssignedTags));
@@ -53,6 +56,10 @@ describe('ArticleListComponent', () => {
         {
           provide: AssignedTagService,
           useValue: assignedTagServiceSpy,
+        },
+        {
+          provide: UserService,
+          useValue: userServiceSpy,
         },
       ],
       imports: [

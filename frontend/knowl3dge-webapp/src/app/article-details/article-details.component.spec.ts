@@ -8,6 +8,7 @@ import { ArticleService } from '../services/article.service';
 import { ArticleDetailsComponent } from './article-details.component';
 import { Article } from '../interfaces/article';
 import { asyncData } from 'src/testing/async-observable-helpers';
+import { UserService } from '../services/user.service';
 
 describe('ArticleDetailsComponent', () => {
   let component: ArticleDetailsComponent;
@@ -15,6 +16,7 @@ describe('ArticleDetailsComponent', () => {
 
   let activatedRouteStub;
   let articleServiceSpy: jasmine.SpyObj<ArticleService>;
+  let userServiceSpy: jasmine.SpyObj<UserService>;
 
   let mockArticle: Article = {
     id: 1,
@@ -28,6 +30,7 @@ describe('ArticleDetailsComponent', () => {
 
   beforeEach(() => {
     articleServiceSpy = jasmine.createSpyObj('ArticleService', ['getArticle']);
+    userServiceSpy = jasmine.createSpyObj('UserService', ['getAllFavourites']);
 
     activatedRouteStub = {
       snapshot: {
@@ -42,6 +45,7 @@ describe('ArticleDetailsComponent', () => {
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: ArticleService, useValue: articleServiceSpy },
+        { provide: UserService, useValue: userServiceSpy },
       ],
       imports: [
         BrowserAnimationsModule,
@@ -53,6 +57,8 @@ describe('ArticleDetailsComponent', () => {
     fixture = TestBed.createComponent(ArticleDetailsComponent);
     component = fixture.componentInstance;
     articleServiceSpy.getArticle.and.returnValue(asyncData(mockArticle));
+    userServiceSpy.getAllFavourites.and.returnValue(asyncData([]));
+
     fixture.detectChanges();
   });
 

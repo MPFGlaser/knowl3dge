@@ -10,14 +10,15 @@
   </div>
   <mat-divider inset></mat-divider>
   <mat-card-actions>
-    <button mat-button [routerLink]="['/articles', article.id]">
+    <button mat-button [routerLink]="['/articles', article.id]" *ngIf="!isDetailsPage">
       Learn more
     </button>
     <button mat-button [routerLink]="['/articles/edit', article.id]">
       Edit
     </button>
-    <button mat-button class="fav-button" disabled>
-      <mat-icon>favorite_border</mat-icon>
+    <button mat-button class="fav-button" (click)="favouriteClicked()">
+      <mat-icon *ngIf="isFavourited" color=accent>favorite</mat-icon>
+      <mat-icon *ngIf="!isFavourited" color=accent>favorite_border</mat-icon>
     </button>
   </mat-card-actions>
 </mat-card>
