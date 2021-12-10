@@ -1,3 +1,4 @@
+import { FavouriteAssigned } from './../interfaces/favouriteAssigned';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -19,15 +20,15 @@ export class UserService {
     false
   );
 
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
+    this.updateLocalStorage();
+  }
+
   token = localStorage.getItem('token');
   headers = {
     'Content-Type': 'application/json',
     Authorization: `Bearer ${this.token}`,
   };
-
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
-    this.updateLocalStorage();
-  }
 
   // Tries to update the userId and username in localStorage based on the token
   async updateLocalStorage() {
@@ -71,5 +72,34 @@ export class UserService {
   // Gets the userid of the user with the given username from the backend
   getUserIdByUsername(username: string) {
     return this.http.get<number>(`${this.apiBaseUrl}/getuserid/${username}`);
+  }
+
+  getAllFavourites() {
+    let currentUsername = localStorage.getItem('username');
+    return this.http.get<FavouriteAssigned[]>(
+      `${this.apiBaseUrl}/favourites/${currentUsername}`,
+      { headers: this.headers }
+    );
+  }
+
+  addFavourite(articleId: number) {
+    this.http
+      .post(
+        `${this.apiBaseUrl}/favourites`,
+        { articleId: articleId },
+        { headers: this.headers }
+      )
+      .toPromise();
+    this.getAllFavourites();
+  }
+
+  removeFavourite(articleId: number) {
+    this.http
+      .delete(`${this.apiBaseUrl}/favourites`, {
+        body: { articleId: articleId },
+        headers: this.headers,
+      })
+      .toPromise();
+    this.getAllFavourites();
   }
 }

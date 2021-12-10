@@ -9,10 +9,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Article } from '../interfaces/article';
 
 import { ArticleCardComponent } from './article-card.component';
+import { UserService } from '../services/user.service';
 
 describe('ArticleCardComponent', () => {
   let component: ArticleCardComponent;
   let fixture: ComponentFixture<ArticleCardComponent>;
+  let userServiceSpy: jasmine.SpyObj<UserService>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -25,9 +27,16 @@ describe('ArticleCardComponent', () => {
         BrowserAnimationsModule,
         MatIconModule,
         AppRoutingModule,
+      ],
+      providers: [
+        {
+          provide: UserService, useValue: userServiceSpy
+        }
       ]
     })
     .compileComponents();
+
+    userServiceSpy = jasmine.createSpyObj('UserService', ['addFavourite', 'removeFavourite']);
 
     fixture = TestBed.createComponent(ArticleCardComponent);
 

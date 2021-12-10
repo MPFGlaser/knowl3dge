@@ -1,3 +1,4 @@
+import { FavouriteAssigned } from './../interfaces/favouriteAssigned';
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -14,8 +15,15 @@ describe('UserService', () => {
     localStorage.clear();
 
     TestBed.configureTestingModule({});
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
-    jwtHelperSpy = jasmine.createSpyObj('JwtHelperService', ['isTokenExpired', 'decodeToken']);
+    httpClientSpy = jasmine.createSpyObj('HttpClient', [
+      'get',
+      'post',
+      'delete',
+    ]);
+    jwtHelperSpy = jasmine.createSpyObj('JwtHelperService', [
+      'isTokenExpired',
+      'decodeToken',
+    ]);
     userService = new UserService(httpClientSpy, jwtHelperSpy);
   });
 
@@ -116,21 +124,92 @@ describe('UserService', () => {
   });
 
   it('should empty localstorage', () => {
-        // Arrange
-        const userId = 123;
-        const token = 'test_token';
-        const username = 'test_username';
+    // Arrange
+    const userId = 123;
+    const token = 'test_token';
+    const username = 'test_username';
 
-        localStorage.setItem('token', token);
-        localStorage.setItem('userId', userId.toString());
-        localStorage.setItem('username', username);
+    localStorage.setItem('token', token);
+    localStorage.setItem('userId', userId.toString());
+    localStorage.setItem('username', username);
 
-        // Act
-        userService.emptyLocalStorage();
+    // Act
+    userService.emptyLocalStorage();
 
-        // Assert
-        expect(localStorage.getItem('userId')).toBe(null, 'user id');
-        expect(localStorage.getItem('username')).toBe(null, 'username');
-        expect(localStorage.getItem('token')).toBe(null, 'token');
+    // Assert
+    expect(localStorage.getItem('userId')).toBe(null, 'user id');
+    expect(localStorage.getItem('username')).toBe(null, 'username');
+    expect(localStorage.getItem('token')).toBe(null, 'token');
+  });
+
+  it('should return all favourites', async () => {
+    // Arrange
+    const mockFavourites: FavouriteAssigned[] = [
+      {
+        id: 1,
+        articleId: 1,
+        userId: 1,
+      },
+      {
+        id: 2,
+        articleId: 2,
+        userId: 1,
+      },
+    ];
+
+    httpClientSpy.get.and.returnValue(asyncData(mockFavourites));
+
+    // Act
+    const response = await userService.getAllFavourites().toPromise();
+
+    // Assert
+    expect(response).toBe(mockFavourites, 'expected favourites');
+    expect(httpClientSpy.get.calls.count()).toBe(1, 'one call');
+  });
+
+  it('should add a favourite', async () => {
+    // Arrange
+    const articleId = 1;
+    httpClientSpy.post.and.returnValue(asyncData(null));
+    let mockHeaders = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
+
+    // Act
+    userService.addFavourite(articleId);
+
+    // Assert
+    expect(httpClientSpy.post.calls.count()).toBe(1, 'one call');
+    expect(httpClientSpy.post).toHaveBeenCalledWith(
+      `${userService.apiBaseUrl}/favourites`,
+      { articleId },
+      {
+        headers: mockHeaders,
+      }
+    );
+  });
+
+  it('should remove a favourite', async () => {
+    // Arrange
+    const articleId = 1;
+    httpClientSpy.delete.and.returnValue(asyncData(null));
+    let mockHeaders = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    };
+
+    // Act
+    userService.removeFavourite(articleId);
+
+    // Assert
+    expect(httpClientSpy.delete.calls.count()).toBe(1, 'one call');
+    expect(httpClientSpy.delete).toHaveBeenCalledWith(
+      `${userService.apiBaseUrl}/favourites`,
+      {
+        body: { articleId },
+        headers: mockHeaders,
+      }
+    );
   });
 });

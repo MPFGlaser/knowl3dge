@@ -1,7 +1,6 @@
 import { UserCredentials } from './../interfaces/userCredentials';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -13,7 +12,6 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private userService: UserService,
-    private jwtHelper: JwtHelperService
   ) {}
 
   async login(credentials: UserCredentials): Promise<boolean> {
