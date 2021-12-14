@@ -1,0 +1,30 @@
+<mat-card class="chat-card">
+  <mat-card-title>Chat</mat-card-title>
+  <mat-card-content>
+    <mat-list id="chatContainer" class="chat-list">
+      <mat-list-item *ngFor="let message of messageService.messages">
+        <div *ngIf="message.user === user" class="chat-message chat-message-own">
+          {{ message.message }}
+        </div>
+
+        <div *ngIf="message.user !== user" class="chat-message chat-message-other">
+          <strong>{{ message.user }}</strong>
+          <br>
+          {{ message.message }}
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <form (ngSubmit)="sendMessage(sendForm)" #sendForm="ngForm">
+      <mat-form-field appearance="standard" class="chat-input">
+        <input matInput type="text" name="message" id="input-message" (keypress.enter)="sendMessage(sendForm)" ngModel
+          placeholder="Message">
+        <button mat-icon-button matSuffix
+         color="primary" type="submit">
+          <mat-icon font-size=24>send</mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
+  </mat-card-actions>
+</mat-card>
