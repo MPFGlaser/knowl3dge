@@ -30,6 +30,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { LoginComponent } from './login/login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JwtModule } from '@auth0/angular-jwt';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   imports: [
@@ -73,6 +74,7 @@ import { JwtModule } from '@auth0/angular-jwt';
     HomeComponent,
     UserProfileComponent,
     LoginComponent,
+    ChatComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
