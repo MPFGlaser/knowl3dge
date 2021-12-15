@@ -9,6 +9,7 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ChatComponent } from './chat/chat.component';
 import { AuthGuard } from './guards/AuthGuard';
+import { AuthGuardAdmin } from './guards/AuthGuardAdmin';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,13 +21,13 @@ const routes: Routes = [
   {
     path: 'articles/edit/:articleId',
     component: ArticleEditorComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {
     path: 'articles/edit',
     pathMatch: 'full',
     component: ArticleEditorComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, AuthGuardAdmin],
   },
   {
     path: 'articles/:articleId',

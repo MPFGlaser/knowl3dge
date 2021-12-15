@@ -2,7 +2,7 @@ import { UserCredentials } from './../interfaces/userCredentials';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UserService } from '../services/user.service';
 
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
     passwordConfirm: ['', [Validators.required, Validators.minLength(6)]],
-  });
+  }, { validator: this.checkPasswords });
 
   ngOnInit(): void {
     if (this.router.url === '/register') {
@@ -45,6 +45,13 @@ export class LoginComponent implements OnInit {
     this.register = !this.register;
   }
 
+  checkPasswords(group: FormGroup) {
+    const pass = group.controls.password.value;
+    const confirmPass = group.controls.passwordConfirm.value;
+
+    return pass === confirmPass ? null : { notSame: true };
+  }
+
   async onSubmit() {
     const credentials: UserCredentials = {
       username: this.userDetailsForm.value.username,
@@ -52,10 +59,19 @@ export class LoginComponent implements OnInit {
     };
 
     if (this.register) {
-      if (!this.authService.register(credentials)) {
-        this.snackBar.open('Something went wrong', '', { duration: 2500 });
+      if (
+        this.userDetailsForm.value.password ===
+        this.userDetailsForm.value.passwordConfirm
+      ) {
+        if (!this.authService.register(credentials)) {
+          this.snackBar.open('Something went wrong', '', { duration: 2500 });
+        } else {
+          this.snackBar.open('Account created. Welcome!', '', {
+            duration: 2500,
+          });
+        }
       } else {
-        this.snackBar.open('Account created. Welcome!', '', { duration: 2500 });
+        this.snackBar.open('Passwords do not match', '', { duration: 2500 });
       }
     } else {
       if (await this.authService.login(credentials)) {

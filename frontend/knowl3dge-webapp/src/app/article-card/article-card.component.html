@@ -9,14 +9,14 @@
     </mat-chip-list>
   </div>
   <mat-divider inset></mat-divider>
-  <mat-card-actions>
+  <mat-card-actions class="button-shelf">
     <button mat-button [routerLink]="['/articles', article.id]" *ngIf="!isDetailsPage">
       Learn more
     </button>
-    <button mat-button [routerLink]="['/articles/edit', article.id]">
+    <button mat-button *ngIf="isAdmin" [routerLink]="['/articles/edit', article.id]">
       Edit
     </button>
-    <button mat-button class="fav-button" (click)="favouriteClicked()">
+    <button mat-icon-button class="fav-button" (click)="favouriteClicked()">
       <mat-icon *ngIf="isFavourited" color=accent>favorite</mat-icon>
       <mat-icon *ngIf="!isFavourited" color=accent>favorite_border</mat-icon>
     </button>

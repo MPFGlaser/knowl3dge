@@ -17,19 +17,19 @@ class TagController(tagRepository: TagRepository, tagAssignedRepository: TagAssi
     val service  = TagService(tagRepository, tagAssignedRepository)
 
     @GetMapping("/all")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     fun findAllTags(): ResponseEntity<List<Tag>> = service.findAllTags()
 
     @GetMapping("/all_assigned")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     fun findAllAssignedTags(): ResponseEntity<List<TagsAssigned>> = service.findAllAssignedTags()
 
     @GetMapping("/all_assigned_aid/{id}")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     fun findAssignedTagByArticleId(@PathVariable id: Int): ResponseEntity<List<TagsAssigned>> = service.findAssignedTagByArticleId(id)
 
     @GetMapping("/all_assigned_tid/{id}")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     fun findAssignedTagByTagId(@PathVariable id: Int): ResponseEntity<List<TagsAssigned>> = service.findAssignedTagByTagId(id)
 
     @PostMapping("/new")

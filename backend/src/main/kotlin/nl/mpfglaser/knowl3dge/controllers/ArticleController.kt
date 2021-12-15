@@ -17,7 +17,7 @@ class ArticleController(repository: ArticleRepository) {
     val service = ArticleService(repository)
 
     // Returns all articles, but if supplied with an id parameter, only the ones specified. (for filtering)
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @GetMapping("")
     fun findList(@RequestParam(required = false) id: String?, @RequestParam(required = false) tag: String?): ResponseEntity<List<Article>>{
         if(id != null){
@@ -38,7 +38,7 @@ class ArticleController(repository: ArticleRepository) {
 
     // Returns an article with the ID provided, if available.
     @GetMapping("/{id}")
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     fun one(@PathVariable id: Int): ResponseEntity<Optional<Article>> = service.findById(id)
 
     // Saves an article and returns the saved values. Must provide the full article data.

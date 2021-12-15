@@ -10,15 +10,29 @@ import { Article } from '../interfaces/article';
 
 import { ArticleCardComponent } from './article-card.component';
 import { UserService } from '../services/user.service';
+import { BehaviorSubject } from 'rxjs';
 
 describe('ArticleCardComponent', () => {
   let component: ArticleCardComponent;
   let fixture: ComponentFixture<ArticleCardComponent>;
-  let userServiceSpy: jasmine.SpyObj<UserService>;
+  let userServiceStub: Partial<UserService>;
 
   beforeEach(() => {
+    userServiceStub = {
+      isLoggedIn: new BehaviorSubject<boolean>(true),
+      currentUsername: new BehaviorSubject<string>('test'),
+      currentUserId: new BehaviorSubject<number>(1),
+      currentRole: new BehaviorSubject<string>('USER'),
+      addFavourite: () => {
+        return;
+      },
+      removeFavourite: () => {
+        return;
+      },
+    };
+
     TestBed.configureTestingModule({
-      declarations: [ ArticleCardComponent ],
+      declarations: [ArticleCardComponent],
       imports: [
         MatCardModule,
         MatChipsModule,
@@ -30,13 +44,11 @@ describe('ArticleCardComponent', () => {
       ],
       providers: [
         {
-          provide: UserService, useValue: userServiceSpy
-        }
-      ]
-    })
-    .compileComponents();
-
-    userServiceSpy = jasmine.createSpyObj('UserService', ['addFavourite', 'removeFavourite']);
+          provide: UserService,
+          useValue: userServiceStub,
+        },
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ArticleCardComponent);
 
