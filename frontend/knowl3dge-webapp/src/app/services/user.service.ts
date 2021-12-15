@@ -16,6 +16,9 @@ export class UserService {
   public currentUserId: BehaviorSubject<number> = new BehaviorSubject<number>(
     -1
   );
+  public currentRole: BehaviorSubject<string> = new BehaviorSubject<string>(
+    ''
+  );
   public isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
@@ -45,10 +48,12 @@ export class UserService {
       }
 
       const username = this.jwtHelper.decodeToken(token).sub;
+      const role = this.jwtHelper.decodeToken(token).role;
       const userId = await this.getUserIdByUsername(username).toPromise();
 
       this.currentUsername.next(username);
       this.currentUserId.next(userId);
+      this.currentRole.next(role);
       this.isLoggedIn.next(true);
 
       localStorage.setItem('userId', userId.toString());

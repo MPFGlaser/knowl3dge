@@ -28,12 +28,12 @@ class UserController(private val userService: UserService) {
     fun getFavourites(@PathVariable username: String): ResponseEntity<List<FavouritesAssigned>> =
         ResponseEntity.ok(userService.getFavourites(username))
 
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @PostMapping("/favourites")
     fun addFavourite(@RequestBody favourite: FavouriteRequest, principal: Principal): ResponseEntity<Any> =
         ResponseEntity.ok(userService.addFavourite(favourite, principal.name))
 
-    @PreAuthorize("hasAuthority('USER')")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     @DeleteMapping("/favourites")
     fun removeFavourite(@RequestBody favourite: FavouriteRequest, principal: Principal): ResponseEntity<Any> =
         ResponseEntity.ok(userService.removeFavourite(favourite, principal.name))

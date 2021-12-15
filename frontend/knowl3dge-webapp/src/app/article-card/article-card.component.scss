@@ -7,6 +7,11 @@
 }
 
 .fav-button {
-  float: right;
   width: fit-content;
+  margin-left: auto;
+  margin-right: 10pt;
+}
+
+.mat-card-actions{
+  display: flex;
 }

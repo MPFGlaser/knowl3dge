@@ -14,11 +14,15 @@ export class ArticleCardComponent implements OnInit {
   @Input() isFavourited?: boolean;
   @Input() isDetailsPage?: boolean;
 
-  constructor(private userService: UserService) {
-  }
+  isAdmin: boolean = false;
+
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.article.content = this.shorten(this.article.content);
+    this.userService.currentRole.toPromise().then((role) => {
+      this.isAdmin = role === 'ADMIN';
+    });
   }
 
   // Checks if an article has tags assigned to it
@@ -38,7 +42,7 @@ export class ArticleCardComponent implements OnInit {
   }
 
   favouriteClicked() {
-    if(!this.isFavourited) {
+    if (!this.isFavourited) {
       this.userService.addFavourite(this.article.id);
       this.isFavourited = true;
       console.warn('Added to favourites');

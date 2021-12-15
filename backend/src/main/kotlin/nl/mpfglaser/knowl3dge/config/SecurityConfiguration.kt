@@ -48,7 +48,7 @@ class SecurityConfiguration(userService: UserService) : WebSecurityConfigurerAda
 
     fun corsConfigurationSource(): CorsConfigurationSource? {
         val configuration = CorsConfiguration()
-        val allowOrigins: List<String> = listOf("http://localhost:4200")
+        val allowOrigins: List<String> = listOf("http://localhost:4200", "https://knowl3dge.mpfglaser.nl", "http://192.168.1.100")
         configuration.allowedOrigins = allowOrigins
         configuration.allowedMethods = listOf("*")
         configuration.allowedHeaders = listOf("*")
