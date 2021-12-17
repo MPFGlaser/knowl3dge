@@ -206,7 +206,7 @@ backend-publish:
   # extends: .backend
   only:
     - master
-  needs: ["backend-build"]
+  # needs: ["backend-build"]
   image: docker:latest
   script:
     - echo "Publishing the frontend code..."
