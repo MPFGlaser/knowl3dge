@@ -25,6 +25,11 @@ variables:
     - when: manual
       allow_failure: true
 
+.docker-rules:
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: always
+
 # Sets the directory for the backend and grabs the correct image
 .backend:
   extends: .base-rules
@@ -188,10 +193,7 @@ frontend-code-quality:
 
 frontend-publish:
   stage: publish
-  # extends: .frontend
-  # needs: ["frontend-build"]
-  only:
-    - master
+  extends: .docker-rules
   image: docker:latest
   script:
     - echo "Publishing the frontend code..."
@@ -203,10 +205,8 @@ frontend-publish:
 
 backend-publish:
   stage: publish
-  # extends: .backend
-  only:
-    - master
-  # needs: ["backend-build"]
+  extends: .docker-rules
+  needs: ["backend-build"]
   image: docker:latest
   script:
     - echo "Publishing the frontend code..."
