@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { AssignedTag } from '../interfaces/assignedTag';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AssignedTagService {
-  apiBaseUrl = 'http://localhost:8080/api/tags';
+  apiBaseUrl = environment.API_URL + '/tags';
 
   token = localStorage.getItem('token');
   headers = {

@@ -2,12 +2,13 @@ import { UserCredentials } from './../interfaces/userCredentials';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  apiBaseUrl = 'http://localhost:8080';
+  apiBaseUrl = environment.API_URL.substring(0, environment.API_URL.length - 4);
 
   constructor(
     private http: HttpClient,

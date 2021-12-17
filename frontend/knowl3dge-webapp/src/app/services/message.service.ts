@@ -1,5 +1,6 @@
 import { ChatMessage } from './../interfaces/chatMessage';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ export class MessageService {
   webSocket: WebSocket;
   messages: ChatMessage[] = [];
 
-  apiBaseUrl = 'ws://localhost:8080/chat';
+  apiBaseUrl = environment.API_URL_CHAT;
 
   constructor() {
     this.webSocket = new WebSocket(this.apiBaseUrl);
