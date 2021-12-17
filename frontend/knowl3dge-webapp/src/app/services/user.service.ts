@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  apiBaseUrl = 'http://localhost:8080/api/user';
+  apiBaseUrl = environment.API_URL + '/user';
 
   public currentUsername: BehaviorSubject<string> = new BehaviorSubject<string>(
     ''

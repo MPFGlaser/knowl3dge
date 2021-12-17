@@ -1,8 +1,10 @@
 stages:
   - install
-  - build
   - test
   - code-quality
+  - build
+  - publish
+
 
 variables:
   RULES_CHANGES_PATH: "**/*"
@@ -79,7 +81,11 @@ backend-build:
   needs: []
   script:
     - echo "Compiling the backend code..."
-    - gradle --build-cache assemble
+    - gradle build
+    #- docker build --build-arg JAR_FILE=build/libs/*.jar -t knowl3dge-backend .
+  artifacts:
+    paths:
+      - backend/build/libs/*.jar
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
@@ -91,11 +97,12 @@ frontend-build:
   stage: build
   extends: .frontend
   script:
-    - yarn ng build --prod
+    - yarn ng build
+    # - docker build -t knowl3dge-webapp:latest .
   artifacts:
     name: "angular-app-pipeline"
     paths:
-      - $APP_OUTPUT_PATH
+      - frontend/knowl3dge-webapp/dist
   cache:
     key:
       files:
@@ -107,7 +114,7 @@ frontend-build:
 backend-test:
   stage: test
   extends: .backend
-  needs: ["backend-build"]
+  # needs: ["backend-build"]
   script:
     - echo "Testing the backend code..."
     - gradle check
@@ -178,3 +185,39 @@ frontend-code-quality:
   script:
     - npm run sonar-scanner -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_FRONTEND_TOKEN}
   allow_failure: true
+
+frontend-publish:
+  stage: publish
+  # extends: .frontend
+  # needs: ["frontend-build"]
+  only:
+    - master
+  image: docker:latest
+  script:
+    - echo "Publishing the frontend code..."
+    - cd ./frontend/knowl3dge-webapp
+    - docker build -t mpfglaser/knowl3dge-webapp:$CI_COMMIT_SHORT_SHA -t mpfglaser/knowl3dge-webapp:latest .
+    - docker login -u mpfglaser -p ${DOCKER_HUB_KEY}
+    - docker push mpfglaser/knowl3dge-webapp:$CI_COMMIT_SHORT_SHA
+    - docker push mpfglaser/knowl3dge-webapp:latest
+
+backend-publish:
+  stage: publish
+  # extends: .backend
+  only:
+    - master
+  needs: ["backend-build"]
+  image: docker:latest
+  script:
+    - echo "Publishing the frontend code..."
+    - cd ./backend
+    - docker build --build-arg JAR_FILE=build/libs/*.jar -t mpfglaser/knowl3dge-backend:$CI_COMMIT_SHORT_SHA -t mpfglaser/knowl3dge-backend:latest .
+    - docker login -u mpfglaser -p ${DOCKER_HUB_KEY}
+    - docker push mpfglaser/knowl3dge-backend:$CI_COMMIT_SHORT_SHA
+    - docker push mpfglaser/knowl3dge-backend:latest
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - build
+      - .gradle
