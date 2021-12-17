@@ -27,7 +27,7 @@ variables:
 
 .docker-rules:
   rules:
-    - if: $CI_COMMIT_BRANCH == master
+    - if: $CI_COMMIT_BRANCH == "master"
       when: always
 
 # Sets the directory for the backend and grabs the correct image
