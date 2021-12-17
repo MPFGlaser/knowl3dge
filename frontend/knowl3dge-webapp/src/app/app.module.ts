@@ -28,7 +28,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { HomeComponent } from './home/home.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { LoginComponent } from './login/login.component';
-import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { JwtModule } from '@auth0/angular-jwt';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   imports: [
@@ -52,6 +54,13 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatProgressSpinnerModule,
     MatSlideToggleModule,
     MatSnackBarModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('access_token');
+        },
+      }
+    })
   ],
   declarations: [
     AppComponent,
@@ -65,6 +74,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     HomeComponent,
     UserProfileComponent,
     LoginComponent,
+    ChatComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

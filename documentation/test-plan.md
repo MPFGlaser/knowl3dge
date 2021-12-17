@@ -26,3 +26,7 @@ The connection with the database is automatically tested upon running the applic
 ## Quality assurrance
 
 The tests will be ran in the CI/CD pipeline (where possible) and will impact the outcome of the pipeline job. Furthermore, SonarQube requires 80% of code to be covered by unit tests as a way to ensure quality.
+
+### SonarQube QA Metrics
+
+SonarQube looks at the quality of the codebase, focussing on the coverage of the unit tests and whether they are passing. Based on that it will allow it to pass or fair the job. The coverage should be at least 80% and all unit tests should pass.

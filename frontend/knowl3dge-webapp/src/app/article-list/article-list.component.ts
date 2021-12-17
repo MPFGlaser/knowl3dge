@@ -1,3 +1,4 @@
+import { FavouriteAssigned } from './../interfaces/favouriteAssigned';
 import { AssignedTagService } from './../services/assigned-tag.service';
 import { AssignedTag } from './../interfaces/assignedTag';
 import { TagService } from '../services/tag.service';
@@ -6,6 +7,7 @@ import { Article } from './../interfaces/article';
 import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../services/article.service';
 import { MatChip } from '@angular/material/chips';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-article-list',
@@ -17,17 +19,20 @@ export class ArticleListComponent implements OnInit {
   tags?: Tag[];
   assignedTags?: AssignedTag[];
   loading: boolean = true;
+  userFavourites: FavouriteAssigned[] = [];
 
   constructor(
     private articleService: ArticleService,
     private tagService: TagService,
-    private assignedTagService: AssignedTagService
+    private assignedTagService: AssignedTagService,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.getTags();
     this.getAssignedTags();
     this.getArticles();
+    this.getUserFavourites();
   }
 
   // Gets articles when the selected tags change
@@ -75,5 +80,24 @@ export class ArticleListComponent implements OnInit {
     } catch (error) {
       console.warn(error);
     }
+  }
+
+  // Gets all favourites of logged in user
+  async getUserFavourites() {
+    try {
+      const userFavourites = await this.userService
+        .getAllFavourites().toPromise();
+      this.userFavourites = userFavourites;
+      console.warn(this.userFavourites);
+    } catch (error) {
+      console.warn(error);
+    }
+  }
+
+  // Gets the favourite status of an article
+  getFavouriteStatus(articleId: number): boolean {
+    return this.userFavourites.some(
+      (favourite: FavouriteAssigned) => favourite.articleId === articleId
+    );
   }
 }

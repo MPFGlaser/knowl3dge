@@ -1,15 +1,21 @@
 package nl.mpfglaser.knowl3dge.service
 
+import nl.mpfglaser.knowl3dge.model.FavouritesAssigned
 import nl.mpfglaser.knowl3dge.model.User
+import nl.mpfglaser.knowl3dge.model.request.FavouriteRequest
 import nl.mpfglaser.knowl3dge.model.request.UserCreateRequest
+import nl.mpfglaser.knowl3dge.repository.ArticleRepository
+import nl.mpfglaser.knowl3dge.repository.FavouritesAssignedRepository
 import nl.mpfglaser.knowl3dge.repository.UserRepository
 import nl.mpfglaser.knowl3dge.security.SecretGenerator
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
-import java.lang.RuntimeException
 
 @Service
-class UserService(private val userRepository: UserRepository) {
+class UserService(
+    private val userRepository: UserRepository,
+    private val favouritesAssignedRepository: FavouritesAssignedRepository,
+) {
     private val passwordEncoder: BCryptPasswordEncoder = BCryptPasswordEncoder()
     private val secretGenerator: SecretGenerator = SecretGenerator()
 
@@ -22,7 +28,7 @@ class UserService(private val userRepository: UserRepository) {
     }
 
     fun createUser(userCreateRequest: UserCreateRequest) {
-        if(readUserByUsername(userCreateRequest.username) != null) {
+        if (readUserByUsername(userCreateRequest.username) != null) {
             throw RuntimeException("Username already exists")
         }
 
@@ -33,5 +39,27 @@ class UserService(private val userRepository: UserRepository) {
         user.secret = secretGenerator.generateSecret()
 
         userRepository.save(user)
+    }
+
+    fun getFavourites(username: String): List<FavouritesAssigned> {
+        val id = readUserByUsername(username)!!.id!!
+        return favouritesAssignedRepository.findByUserId(id)
+    }
+
+    fun addFavourite(favourite: FavouriteRequest, username: String) {
+        val favouriteAssigned = FavouritesAssigned()
+        favouriteAssigned.userId = readUserByUsername(username)!!.id
+        favouriteAssigned.articleId = favourite.articleId!!
+        favouritesAssignedRepository.save(favouriteAssigned)
+    }
+
+    // Gets all favourites for the user, then deletes the favourite with the given articleId
+    fun removeFavourite(favourite: FavouriteRequest, username: String) {
+        val favouritesAssigned = this.getFavourites(username)
+        for(fav in favouritesAssigned) {
+            if(fav.articleId == favourite.articleId) {
+                favouritesAssignedRepository.delete(fav)
+            }
+        }
     }
 }

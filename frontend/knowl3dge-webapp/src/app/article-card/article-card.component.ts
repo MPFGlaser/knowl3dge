@@ -1,6 +1,7 @@
 import { Article } from './../interfaces/article';
 import { Component, Input, OnInit } from '@angular/core';
 import { AssignedTag } from '../interfaces/assignedTag';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-article-card',
@@ -10,10 +11,20 @@ import { AssignedTag } from '../interfaces/assignedTag';
 export class ArticleCardComponent implements OnInit {
   @Input() article!: Article;
   @Input() assignedTags?: AssignedTag[] = [];
+  @Input() isFavourited?: boolean;
+  @Input() isDetailsPage?: boolean;
+
+  isAdmin: boolean = false;
+
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.article.content = this.shorten(this.article.content);
+    this.userService.currentRole.toPromise().then((role) => {
+      this.isAdmin = role === 'ADMIN';
+    });
   }
+
   // Checks if an article has tags assigned to it
   checkForTags(articleId: number): AssignedTag[] {
     if (this.assignedTags) {
@@ -28,5 +39,17 @@ export class ArticleCardComponent implements OnInit {
       return input.substring(0, 150).trim() + '...';
     }
     return input;
+  }
+
+  favouriteClicked() {
+    if (!this.isFavourited) {
+      this.userService.addFavourite(this.article.id);
+      this.isFavourited = true;
+      console.warn('Added to favourites');
+    } else {
+      this.userService.removeFavourite(this.article.id);
+      this.isFavourited = false;
+      console.warn('Removed from favourites');
+    }
   }
 }

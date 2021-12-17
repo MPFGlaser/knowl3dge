@@ -1,5 +1,5 @@
+import { UserService } from './../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AuthService } from './../services/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -24,38 +24,32 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private authService: AuthService,
+    private userService: UserService,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.authService.isLoggedIn.subscribe((value) => {
-      this.loginChange(value);
-    });
-    this.authService.currentUsername.subscribe((value) => {
+    this.userService.currentUsername.subscribe((value) => {
       this.currentUsername = value;
     });
-    this.authService.currentUserId.subscribe((value) => {
+    this.userService.currentUserId.subscribe((value) => {
       this.currentUserId = value;
     });
-  }
-
-  loginChange(value: boolean) {
-    if (this.isLoggedIn) {
+    this.userService.isLoggedIn.subscribe((value) => {
       this.isLoggedIn = value;
-      this.snackBar.open('You have been logged out', '', {
-        duration: 2500,
-      });
-    } else {
-      this.isLoggedIn = value;
-    }
+    });
   }
 
   ngOnDestroy(): void {
-    this.authService.isLoggedIn.unsubscribe();
+    this.userService.currentUsername.unsubscribe();
+    this.userService.currentUserId.unsubscribe();
+    this.userService.isLoggedIn.unsubscribe();
   }
 
   logout() {
-    this.authService.logout();
+    this.snackBar.open('You have been logged out', '', {
+      duration: 2500,
+    });
+    this.userService.emptyLocalStorage();
   }
 }
