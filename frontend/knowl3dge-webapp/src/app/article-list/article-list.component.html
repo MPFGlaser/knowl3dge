@@ -5,7 +5,7 @@
   <div>
     <mat-spinner *ngIf="loading" class="loading-spinner"></mat-spinner>
     <div *ngFor="let article of articles" class="article-card">
-      <app-article-card [article]="article" [assignedTags]="assignedTags"></app-article-card>
+      <app-article-card [article]="article" [assignedTags]="assignedTags" [isFavourited]="getFavouriteStatus(article.id)"></app-article-card>
     </div>
     <button mat-fab color="primary" class="button-add" routerLink="/articles/edit">
       <mat-icon>add</mat-icon>

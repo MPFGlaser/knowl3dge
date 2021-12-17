@@ -1,12 +1,13 @@
 import { Tag } from '../interfaces/tag';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TagService {
-  apiBaseUrl = 'http://localhost:8080/api/tags';
+  apiBaseUrl = environment.API_URL + '/tags';
 
   token = localStorage.getItem('token');
   headers = {
