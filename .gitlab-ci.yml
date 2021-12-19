@@ -5,7 +5,6 @@ stages:
   - build
   - publish
 
-
 variables:
   RULES_CHANGES_PATH: "**/*"
   SONAR_TOKEN: ""
@@ -25,12 +24,15 @@ variables:
     - when: manual
       allow_failure: true
 
-# Sets the directory for the backend and grabs the correct image
 .backend:
   extends: .base-rules
-  image: gradle:7.1.1-jdk11
   variables:
     RULES_CHANGES_PATH: "backend/**/*"
+
+.backend-gradle:
+  extends: .backend
+  image: gradle:7.1.1-jdk11
+  variables:
     GRADLE_OPTS: "-Dorg.gradle.daemon=false"
   before_script:
     - SONAR_TOKEN=${SONAR_BACKEND_TOKEN}
@@ -38,16 +40,90 @@ variables:
     - cp -fr $application_properties_dev config/application.properties
     - export GRADLE_USER_HOME=`pwd`/.gradle
 
+backend-build:
+  stage: build
+  extends: .backend-gradle
+  needs: []
+  script:
+    - echo "Compiling the backend code..."
+    - gradle build
+  artifacts:
+    paths:
+      - backend/build/libs/*.jar
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - build
+      - .gradle
+
+backend-test:
+  stage: test
+  extends: .backend-gradle
+  needs: []
+  script:
+    - echo "Testing the backend code..."
+    - gradle check
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+  artifacts:
+    when: always
+    reports:
+      junit: backend/build/test-results/test/TEST-*.xml
+
+backend-code-quality:
+  stage: code-quality
+  extends: .backend-gradle
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar" # Defines the location of the analysis task cache
+    GIT_DEPTH: "0" # Tells git to fetch all the branches of the project, required by the analysis task
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - echo "Running SonarQube on the backend code..."
+    - gradle sonarqube
+  allow_failure: true
+
+backend-publish:
+  stage: publish
+  extends: .backend
+  needs: ["backend-build"]
+  image: docker:latest
+  script:
+    - echo "Publishing the backend code..."
+    - docker build --build-arg JAR_FILE=build/libs/*.jar -t mpfglaser/knowl3dge-backend:$CI_COMMIT_SHORT_SHA -t mpfglaser/knowl3dge-backend:latest .
+    - docker login -u mpfglaser -p ${DOCKER_HUB_KEY}
+    - docker push mpfglaser/knowl3dge-backend:$CI_COMMIT_SHORT_SHA
+    - docker push mpfglaser/knowl3dge-backend:latest
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - build
+      - .gradle
+
 # Sets the directory for the frontend
 .frontend:
   extends: .base-rules
-  image: node:14.18.1
   variables:
     RULES_CHANGES_PATH: "frontend/knowl3dge-webapp/**/*"
   before_script:
     - SONAR_TOKEN=${SONAR_FRONTEND_TOKEN}
-    - apt-get update
     - cd ./frontend/knowl3dge-webapp
+
+.frontend-node:
+  extends: .frontend
+  image: node:14.18.1
+  variables:
+    RULES_CHANGES_PATH: "frontend/knowl3dge-webapp/**/*"
+  before_script:
+    - apt-get update
     - npm install --legacy-peer-deps
   cache:
     key:
@@ -60,6 +136,7 @@ frontend-install-dependencies:
   stage: install
   image: node:14.18.1
   script:
+    - echo "Installing frontend dependencies..."
     - yarn install
     - yarn ngcc --properties es2015 --create-ivy-entry-points
   cache:
@@ -75,30 +152,12 @@ frontend-install-dependencies:
     changes:
       - frontend/knowl3dge-webapp/yarn.lock
 
-backend-build:
-  stage: build
-  extends: .backend
-  needs: []
-  script:
-    - echo "Compiling the backend code..."
-    - gradle build
-    #- docker build --build-arg JAR_FILE=build/libs/*.jar -t knowl3dge-backend .
-  artifacts:
-    paths:
-      - backend/build/libs/*.jar
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: push
-    paths:
-      - build
-      - .gradle
-
 frontend-build:
   stage: build
-  extends: .frontend
+  extends: .frontend-node
   script:
+    - echo "Compiling the frontend code..."
     - yarn ng build
-    # - docker build -t knowl3dge-webapp:latest .
   artifacts:
     name: "angular-app-pipeline"
     paths:
@@ -111,28 +170,11 @@ frontend-build:
       - frontend/knowl3dge-webapp/node_modules
     policy: pull
 
-backend-test:
-  stage: test
-  extends: .backend
-  # needs: ["backend-build"]
-  script:
-    - echo "Testing the backend code..."
-    - gradle check
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: pull
-    paths:
-      - build
-      - .gradle
-  artifacts:
-    when: always
-    reports:
-      junit: backend/build/test-results/test/TEST-*.xml
-
 frontend-test:
   stage: test
-  extends: .frontend
+  extends: .frontend-node
   script:
+    - echo "Testing the frontend code..."
     - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     - apt install -y ./google-chrome*.deb;
     - export CHROME_BIN=/usr/bin/google-chrome
@@ -153,22 +195,9 @@ frontend-test:
       junit: frontend/knowl3dge-webapp/reports/junit_report.xml
     expire_in: 1 day
 
-backend-code-quality:
-  stage: code-quality
-  extends: .backend
-  variables:
-    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar" # Defines the location of the analysis task cache
-    GIT_DEPTH: "0" # Tells git to fetch all the branches of the project, required by the analysis task
-  cache:
-    key: "${CI_JOB_NAME}"
-    paths:
-      - .sonar/cache
-  script: gradle sonarqube
-  allow_failure: true
-
 frontend-code-quality:
   stage: code-quality
-  extends: .frontend
+  extends: .frontend-node
   needs: ["frontend-test"]
   dependencies:
     - frontend-test
@@ -183,15 +212,13 @@ frontend-code-quality:
       - frontend/knowl3dge-webapp/node_modules
     policy: pull
   script:
+    - echo "Running SonarQube on the frontend code..."
     - npm run sonar-scanner -Dsonar.host.url=${SONAR_HOST_URL} -Dsonar.login=${SONAR_FRONTEND_TOKEN}
   allow_failure: true
 
 frontend-publish:
   stage: publish
-  # extends: .frontend
-  # needs: ["frontend-build"]
-  only:
-    - master
+  extends: .frontend
   image: docker:latest
   script:
     - echo "Publishing the frontend code..."
@@ -200,24 +227,3 @@ frontend-publish:
     - docker login -u mpfglaser -p ${DOCKER_HUB_KEY}
     - docker push mpfglaser/knowl3dge-webapp:$CI_COMMIT_SHORT_SHA
     - docker push mpfglaser/knowl3dge-webapp:latest
-
-backend-publish:
-  stage: publish
-  # extends: .backend
-  only:
-    - master
-  needs: ["backend-build"]
-  image: docker:latest
-  script:
-    - echo "Publishing the frontend code..."
-    - cd ./backend
-    - docker build --build-arg JAR_FILE=build/libs/*.jar -t mpfglaser/knowl3dge-backend:$CI_COMMIT_SHORT_SHA -t mpfglaser/knowl3dge-backend:latest .
-    - docker login -u mpfglaser -p ${DOCKER_HUB_KEY}
-    - docker push mpfglaser/knowl3dge-backend:$CI_COMMIT_SHORT_SHA
-    - docker push mpfglaser/knowl3dge-backend:latest
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: push
-    paths:
-      - build
-      - .gradle
