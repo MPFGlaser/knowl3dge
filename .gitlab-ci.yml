@@ -26,17 +26,22 @@ variables:
 
 .backend:
   extends: .base-rules
+  before_script:
+    - cd ./backend
+    - cp -fr $application_properties_dev config/application.properties
+    - export GRADLE_USER_HOME=`pwd`/.gradle
   variables:
     RULES_CHANGES_PATH: "backend/**/*"
 
 .backend-gradle:
-  extends: .backend
+  extends: .base-rules
   image: gradle:7.1.1-jdk11
   variables:
     GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+    RULES_CHANGES_PATH: "backend/**/*"
   before_script:
-    - SONAR_TOKEN=${SONAR_BACKEND_TOKEN}
     - cd ./backend
+    - SONAR_TOKEN=${SONAR_BACKEND_TOKEN}
     - cp -fr $application_properties_dev config/application.properties
     - export GRADLE_USER_HOME=`pwd`/.gradle
 
@@ -60,7 +65,6 @@ backend-build:
 backend-test:
   stage: test
   extends: .backend-gradle
-  needs: []
   script:
     - echo "Testing the backend code..."
     - gradle check
@@ -78,6 +82,7 @@ backend-test:
 backend-code-quality:
   stage: code-quality
   extends: .backend-gradle
+  needs: ['backend-test']
   variables:
     SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar" # Defines the location of the analysis task cache
     GIT_DEPTH: "0" # Tells git to fetch all the branches of the project, required by the analysis task
@@ -116,13 +121,21 @@ backend-publish:
   before_script:
     - SONAR_TOKEN=${SONAR_FRONTEND_TOKEN}
     - cd ./frontend/knowl3dge-webapp
+  cache:
+    key:
+      files:
+        - frontend/knowl3dge-webapp/package-lock.json
+    paths:
+      - frontend/knowl3dge-webapp/node_modules
 
 .frontend-node:
-  extends: .frontend
+  extends: .base-rules
   image: node:14.18.1
   variables:
     RULES_CHANGES_PATH: "frontend/knowl3dge-webapp/**/*"
   before_script:
+    - cd ./frontend/knowl3dge-webapp
+    - SONAR_TOKEN=${SONAR_FRONTEND_TOKEN}
     - apt-get update
     - npm install --legacy-peer-deps
   cache:
@@ -222,7 +235,6 @@ frontend-publish:
   image: docker:latest
   script:
     - echo "Publishing the frontend code..."
-    - cd ./frontend/knowl3dge-webapp
     - docker build -t mpfglaser/knowl3dge-webapp:$CI_COMMIT_SHORT_SHA -t mpfglaser/knowl3dge-webapp:latest .
     - docker login -u mpfglaser -p ${DOCKER_HUB_KEY}
     - docker push mpfglaser/knowl3dge-webapp:$CI_COMMIT_SHORT_SHA
