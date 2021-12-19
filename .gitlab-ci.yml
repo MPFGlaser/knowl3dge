@@ -97,7 +97,7 @@ backend-publish:
   image: docker:latest
   script:
     - echo "Publishing the backend code..."
-    - docker build --build-arg JAR_FILE=build/libs/*.jar -t mpfglaser/knowl3dge-backend:$CI_COMMIT_SHORT_SHA -t mpfglaser/knowl3dge-backend:latest .
+    - docker build --build-arg JAR_FILE=/backend/build/libs/*.jar -t mpfglaser/knowl3dge-backend:$CI_COMMIT_SHORT_SHA -t mpfglaser/knowl3dge-backend:latest .
     - docker login -u mpfglaser -p ${DOCKER_HUB_KEY}
     - docker push mpfglaser/knowl3dge-backend:$CI_COMMIT_SHORT_SHA
     - docker push mpfglaser/knowl3dge-backend:latest
