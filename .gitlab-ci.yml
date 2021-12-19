@@ -131,19 +131,11 @@ backend-publish:
 .frontend-node:
   extends: .base-rules
   image: node:14.18.1
-  variables:
-    RULES_CHANGES_PATH: "frontend/knowl3dge-webapp/**/*"
   before_script:
     - cd ./frontend/knowl3dge-webapp
     - SONAR_TOKEN=${SONAR_FRONTEND_TOKEN}
     - apt-get update
     - npm install --legacy-peer-deps
-  cache:
-    key:
-      files:
-        - frontend/knowl3dge-webapp/package-lock.json
-    paths:
-      - frontend/knowl3dge-webapp/node_modules
 
 frontend-install-dependencies:
   stage: install
