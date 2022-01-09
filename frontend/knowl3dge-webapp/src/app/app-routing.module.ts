@@ -1,3 +1,4 @@
+import { StatisticsComponent } from './statistics/statistics.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -32,6 +33,11 @@ const routes: Routes = [
   {
     path: 'articles/:articleId',
     component: ArticleDetailsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'statistics',
+    component: StatisticsComponent,
     canActivate: [AuthGuard],
   },
   {

@@ -1,3 +1,4 @@
+import { StatisticsDataPoint } from './../interfaces/statisticsDataPoint';
 import { Article } from './../interfaces/article';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +14,7 @@ export class ArticleService {
   token = localStorage.getItem('token');
   headers = {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${this.token}`
+    Authorization: `Bearer ${this.token}`,
   };
 
   constructor(private http: HttpClient) {}
@@ -65,5 +66,14 @@ export class ArticleService {
 
     console.warn(query);
     return query;
+  }
+
+  getFavouriteStatistics() {
+    return this.http.get<StatisticsDataPoint[]>(
+      `${this.apiBaseUrl}/favouritestatistics`,
+      {
+        headers: this.headers,
+      }
+    );
   }
 }
