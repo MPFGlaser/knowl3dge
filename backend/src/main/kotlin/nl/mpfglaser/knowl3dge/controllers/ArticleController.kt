@@ -1,6 +1,7 @@
 package nl.mpfglaser.knowl3dge.controllers
 
 import nl.mpfglaser.knowl3dge.model.Article
+import nl.mpfglaser.knowl3dge.model.response.StatisticsDataPoint
 import nl.mpfglaser.knowl3dge.repository.ArticleRepository
 import nl.mpfglaser.knowl3dge.service.ArticleService
 import org.springframework.http.HttpStatus
@@ -40,6 +41,11 @@ class ArticleController(repository: ArticleRepository) {
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
     fun one(@PathVariable id: Int): ResponseEntity<Optional<Article>> = service.findById(id)
+
+    // Gets favourite counts for all articles
+    @GetMapping("/favouritestatistics")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    fun favouriteStatistics(): ResponseEntity<List<StatisticsDataPoint>> = service.getFavouriteStatistics()
 
     // Saves an article and returns the saved values. Must provide the full article data.
     @PostMapping("/new")
