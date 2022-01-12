@@ -8,7 +8,7 @@
         </div>
 
         <div *ngIf="message.user !== user" class="chat-message chat-message-other">
-          <strong>{{ message.user }}</strong>
+          <strong class="chat-name">{{ message.user }}</strong>:
           <br>
           {{ message.message }}
         </div>

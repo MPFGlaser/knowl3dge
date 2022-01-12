@@ -1,5 +1,5 @@
 import { Article } from './../interfaces/article';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { AssignedTag } from '../interfaces/assignedTag';
 import { UserService } from '../services/user.service';
 
@@ -8,7 +8,7 @@ import { UserService } from '../services/user.service';
   templateUrl: './article-card.component.html',
   styleUrls: ['./article-card.component.scss'],
 })
-export class ArticleCardComponent implements OnInit {
+export class ArticleCardComponent implements OnInit, OnDestroy {
   @Input() article!: Article;
   @Input() assignedTags?: AssignedTag[] = [];
   @Input() isFavourited?: boolean;
@@ -20,9 +20,13 @@ export class ArticleCardComponent implements OnInit {
 
   ngOnInit() {
     this.article.content = this.shorten(this.article.content);
-    this.userService.currentRole.toPromise().then((role) => {
+    this.userService.currentRole.subscribe((role) => {
       this.isAdmin = role === 'ADMIN';
     });
+  }
+
+  ngOnDestroy(): void {
+    this.userService.currentRole.unsubscribe();
   }
 
   // Checks if an article has tags assigned to it
