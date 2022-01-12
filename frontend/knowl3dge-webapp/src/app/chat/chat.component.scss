@@ -54,7 +54,7 @@
   margin-left: auto;
   border-bottom-right-radius: 0pt;
   // background-color: map-get($knowl3dge-webapp-primary, A400);
-  background-color: #4855b2;
+  background-color: #4499f0;
   color: whitesmoke;
 }
 
@@ -62,5 +62,10 @@
   margin-left: 0pt;
   margin-right: auto;
   border-bottom-left-radius: 0pt;
-  background-color: lightgrey;
+  background-color: grey;
+  color: whitesmoke;
+}
+
+.chat-name{
+  font-weight: 570;
 }
