@@ -31,7 +31,7 @@
     <div>
       <mat-form-field class="login-field" appearance="fill">
         <mat-label>Password</mat-label>
-        <input matInput formControlName="password" type="password">
+        <input matInput formControlName="password" type="password" (keyup.enter)="onSubmit()">
         <mat-error>
           Password must be at least 6 characters long
         </mat-error>
