@@ -1,5 +1,6 @@
 package nl.mpfglaser.knowl3dge.service
 import nl.mpfglaser.knowl3dge.model.Article
+import nl.mpfglaser.knowl3dge.model.response.StatisticsDataPoint
 import nl.mpfglaser.knowl3dge.repository.ArticleRepository
 import org.springframework.http.ResponseEntity
 import org.springframework.http.HttpStatus
@@ -53,5 +54,34 @@ class ArticleService(private val repository: ArticleRepository) {
     fun deleteById(id: Int): ResponseEntity<String>{
         repository.deleteById(id)
         return ResponseEntity("Deleted", HttpStatus.OK)
+    }
+
+    // Get favourite statistics
+    fun getFavouriteStatistics(): ResponseEntity<List<StatisticsDataPoint>>{
+        val result: MutableList<StatisticsDataPoint> = mutableListOf()
+
+        val articleIds = repository.findAll().map { it.id }
+
+        for (articleId in articleIds) {
+            val title = repository.findById(articleId!!).get().title
+            val value = repository.getLikeCount(articleId)
+
+            val dataPoint = StatisticsDataPoint()
+            dataPoint.title = title
+            dataPoint.value = value
+
+
+            if(dataPoint.title.isNullOrBlank() || dataPoint.value == null){
+                break
+            }
+            else{
+                result.add(dataPoint)
+            }
+        }
+
+        if(result.isNotEmpty()){
+            return ResponseEntity<List<StatisticsDataPoint>>(result, HttpStatus.OK)
+        }
+        return ResponseEntity<List<StatisticsDataPoint>>(null, HttpStatus.NOT_FOUND)
     }
 }

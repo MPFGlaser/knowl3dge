@@ -26,9 +26,7 @@ export class NavBarComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     private userService: UserService,
     private snackBar: MatSnackBar
-  ) {}
-
-  ngOnInit(): void {
+  ) {
     this.userService.currentUsername.subscribe((value) => {
       this.currentUsername = value;
     });
@@ -38,6 +36,10 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.userService.isLoggedIn.subscribe((value) => {
       this.isLoggedIn = value;
     });
+  }
+
+  ngOnInit(): void {
+
   }
 
   ngOnDestroy(): void {
@@ -51,5 +53,6 @@ export class NavBarComponent implements OnInit, OnDestroy {
       duration: 2500,
     });
     this.userService.emptyLocalStorage();
+    this.userService.updateLocalStorage();
   }
 }
