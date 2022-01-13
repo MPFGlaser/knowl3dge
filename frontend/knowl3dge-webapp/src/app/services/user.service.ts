@@ -64,6 +64,14 @@ export class UserService {
     }
   }
 
+  private updateHeaders(){
+    let _token = localStorage.getItem('token');
+    this.headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${_token}`,
+    };
+  }
+
   // Removes everything from localstorage if something's wrong
   emptyLocalStorage() {
     localStorage.removeItem('userId');
@@ -81,6 +89,7 @@ export class UserService {
   }
 
   getAllFavourites() {
+    this.updateHeaders();
     let currentUsername = localStorage.getItem('username');
     return this.http.get<FavouriteAssigned[]>(
       `${this.apiBaseUrl}/favourites/${currentUsername}`,
@@ -89,6 +98,7 @@ export class UserService {
   }
 
   addFavourite(articleId: number) {
+    this.updateHeaders();
     this.http
       .post(
         `${this.apiBaseUrl}/favourites`,
@@ -100,6 +110,7 @@ export class UserService {
   }
 
   removeFavourite(articleId: number) {
+    this.updateHeaders();
     this.http
       .delete(`${this.apiBaseUrl}/favourites`, {
         body: { articleId: articleId },

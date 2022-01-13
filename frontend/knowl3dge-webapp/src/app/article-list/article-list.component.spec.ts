@@ -1,3 +1,4 @@
+import { FavouriteAssigned } from './../interfaces/favouriteAssigned';
 import { asyncData } from 'src/testing/async-observable-helpers';
 import { Tag } from './../interfaces/tag';
 import { AssignedTag } from './../interfaces/assignedTag';
@@ -18,6 +19,7 @@ import {
   MatProgressSpinnerModule,
 } from '@angular/material/progress-spinner';
 import { UserService } from '../services/user.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 describe('ArticleListComponent', () => {
   let component: ArticleListComponent;
@@ -27,6 +29,7 @@ describe('ArticleListComponent', () => {
   let tagServiceSpy: jasmine.SpyObj<TagService>;
   let assignedTagServiceSpy: jasmine.SpyObj<AssignedTagService>;
   let userServiceSpy: jasmine.SpyObj<UserService>;
+  let userServiceStub: Partial<UserService>;
 
   let mockTags: Tag[];
   let mockAssignedTags: AssignedTag[];
@@ -36,11 +39,23 @@ describe('ArticleListComponent', () => {
     articleServiceSpy = jasmine.createSpyObj('ArticleService', ['getArticles']);
     tagServiceSpy = jasmine.createSpyObj('TagService', ['getTags']);
     assignedTagServiceSpy = jasmine.createSpyObj('AssignedTagService', ['getAssignedTags']);
-    userServiceSpy = jasmine.createSpyObj('UserService', ['getAllFavourites']);
+    // userServiceSpy = jasmine.createSpyObj('UserService', ['getAllFavourites', 'currentRole']);
 
     tagServiceSpy.getTags.and.returnValue(asyncData(mockTags));
     assignedTagServiceSpy.getAssignedTags.and.returnValue(asyncData(mockAssignedTags));
     articleServiceSpy.getArticles.and.returnValue(asyncData(mockArticles));
+    userServiceStub = {
+      isLoggedIn: new BehaviorSubject<boolean>(true),
+      currentUsername: new BehaviorSubject<string>('test'),
+      currentUserId: new BehaviorSubject<number>(1),
+      currentRole: new BehaviorSubject<string>('USER'),
+      addFavourite: () => {
+        return;
+      },
+      removeFavourite: () => {
+        return;
+      },
+    };
 
     TestBed.configureTestingModule({
       declarations: [ArticleListComponent, ArticleChipFilterComponent],
@@ -59,7 +74,7 @@ describe('ArticleListComponent', () => {
         },
         {
           provide: UserService,
-          useValue: userServiceSpy,
+          useValue: userServiceStub,
         },
       ],
       imports: [

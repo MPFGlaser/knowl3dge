@@ -4,7 +4,7 @@ import { AssignedTag } from './../interfaces/assignedTag';
 import { TagService } from '../services/tag.service';
 import { Tag } from './../interfaces/tag';
 import { Article } from './../interfaces/article';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ArticleService } from '../services/article.service';
 import { MatChip } from '@angular/material/chips';
 import { UserService } from '../services/user.service';
@@ -14,12 +14,14 @@ import { UserService } from '../services/user.service';
   templateUrl: './article-list.component.html',
   styleUrls: ['./article-list.component.scss'],
 })
-export class ArticleListComponent implements OnInit {
+export class ArticleListComponent implements OnInit, OnDestroy {
   articles!: Article[];
   tags?: Tag[];
   assignedTags?: AssignedTag[];
   loading: boolean = true;
   userFavourites: FavouriteAssigned[] = [];
+
+  isAdmin: boolean = false;
 
   constructor(
     private articleService: ArticleService,
@@ -28,11 +30,19 @@ export class ArticleListComponent implements OnInit {
     private userService: UserService
   ) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.getTags();
     this.getAssignedTags();
     this.getArticles();
     this.getUserFavourites();
+
+    this.userService.currentRole.subscribe((role) => {
+      this.isAdmin = role === 'ADMIN';
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.userService.currentRole.unsubscribe();
   }
 
   // Gets articles when the selected tags change
@@ -86,7 +96,8 @@ export class ArticleListComponent implements OnInit {
   async getUserFavourites() {
     try {
       const userFavourites = await this.userService
-        .getAllFavourites().toPromise();
+        .getAllFavourites()
+        .toPromise();
       this.userFavourites = userFavourites;
       console.warn(this.userFavourites);
     } catch (error) {

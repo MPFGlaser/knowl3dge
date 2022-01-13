@@ -31,6 +31,10 @@ import { LoginComponent } from './login/login.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ChatComponent } from './chat/chat.component';
+import { StatisticsComponent } from './statistics/statistics.component';
+import {MatTableModule} from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+
 
 @NgModule({
   imports: [
@@ -54,6 +58,8 @@ import { ChatComponent } from './chat/chat.component';
     MatProgressSpinnerModule,
     MatSlideToggleModule,
     MatSnackBarModule,
+    MatTableModule,
+    MatSortModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
@@ -75,6 +81,7 @@ import { ChatComponent } from './chat/chat.component';
     UserProfileComponent,
     LoginComponent,
     ChatComponent,
+    StatisticsComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],
